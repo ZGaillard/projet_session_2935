@@ -1,0 +1,80 @@
+\documentclass{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Packages %%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+
+\usepackage{geometry}
+\geometry{left = 25 mm, top = 25 mm}%pour les marges
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{diagbox}
+\usepackage{hyperref}
+
+\usepackage{xcolor} % for setting colors
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\usepackage{array}
+\newcolumntype{C}{>{\(\displaystyle}c<{\)}@{}} 
+\newcolumntype{L}{>{\(\displaystyle}l<{\)}@{}} 
+\newcolumntype{R}{>{\(\displaystyle}r<{\)}@{}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Macros %%%%%%%%%%%%%%%%%%%%%%%%%
+% mathbb for class of numbers macro.
+\newcommand{\BB}[1]{\mathbb{#1}}
+
+% Integral macro.
+\newcommand{\intt}[4]{\displaystyle\int_{#1}^{#2}#3\;\text{d}#4}
+% use :$\intt{a}{b}{f(x)}{x}$
+
+% end line
+\newcommand{\n}{\\ [6pt]}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% Document %%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Page titre %%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+  \centering
+  
+  \rule{\textwidth}{0px}
+  \vspace{15mm}
+  
+  \Huge{Rapport} \\
+  \vspace{5mm}
+  \Large Bases de données \\
+  IFT 2935
+  
+  \vspace{40mm}
+  \large par \\ \vspace{3mm}
+  Zakary Gaillard-Duchassin\\ \vspace{3mm}
+  Aiman Rahmani \\ \vspace{3mm}
+  Prenom Nom \\ \vspace{3mm}
+  Prenom Nom \\ \vspace{3mm}
+  Prenom Nom \\ \vspace{3mm}
+  \vspace{30mm}
+  présenté à \\ \vspace{3mm}
+  Jihene Rezgui
+  
+  \vfill
+  13 février 2024 \\ \vspace{3mm}
+  \includegraphics[scale=0.55]{logo-udem.png}
+\end{titlepage}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Contenu %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\end{document}
