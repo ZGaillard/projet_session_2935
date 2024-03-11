@@ -153,3 +153,4 @@ cython_debug/
 
 # backup of drawio
 .drawio.bkp
+*.bkp
