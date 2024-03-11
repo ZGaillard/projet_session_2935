@@ -67,14 +67,48 @@
   Jihene Rezgui
   
   \vfill
-  13 février 2024 \\ \vspace{3mm}
+  12 mars 2024 \\ \vspace{3mm}
   \includegraphics[scale=0.55]{logo-udem.png}
 \end{titlepage}
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Contenu %%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
 
+\newpage
+\section{Modélisation}
 
+\subsection{Modèle Entité-Association}
+\begin{center}
+  \includegraphics[scale=0.85]{../modeleEA.pdf}
+\end{center}
+\newpage
+
+\subsection{Modèle Relationnel}
+\begin{itemize}
+\item \textbf{Oeuvre}(\underline{id\_oeuvre}, titre, budget,
+  date\_sortie, durée, origine, langue, genre)
+\item \textbf{Films}(\underline{\#id\_oeuvre}, \#id\_Studio)
+\item \textbf{Pièces\_Théâtre}(\underline{\#id\_oeuvre}, théâtre)
+\item \textbf{Scènes}(\underline{id\_scène}, titre, budget, type,
+  \#id\_oeuvre)
+\item \textbf{Adresses}(\underline{id\_adresse},no\_civique, rue,
+  ville, code\_postal, pays, no\_appartement)
+\item \textbf{Renseignement\_Supplémentaire\_Artiste}(
+  \underline{id\_renseignement}, habitudes, sports, relation)
+\item \textbf{Artistes}(\underline{id\_artiste}, nom, prénom,
+  date\_naissance, salaire\_min, domaine, \#id\_adresse,
+  \#id\_renseignement)
+\item \textbf{Casting}(\underline{\#id\_oeuvre}, objectif, thème)
+\item \textbf{Compagnies}(\underline{id\_compagnie}, nom,
+  type\_industrie, \#id\_adresse)
+\item \textbf{Sponsors}(\underline{\#id\_oeuvres \#id\_compagnie},
+  montant)
+\item \textbf{Producteurs}(\underline{\#id\_oeuvres
+    \#id\_compagnie})
+\item \textbf{Travail\_Artiste}(\underline{\#id\_artiste
+    \#id\_oeuvre}, rôle, salaire, date\_début, date\_fin)
+\end{itemize}
 
 
 \end{document}
