@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-03-12T17:20:05.587Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0" etag="OQlRrTHFCM18ydWuoSGR" version="24.0.5" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-12T17:25:20.220Z" agent="Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0" etag="_m2fDt0pwRHC86g71YhH" version="24.0.5" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="4037" dy="1600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="2643" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -549,6 +549,24 @@
         </mxCell>
         <mxCell id="ZD1sIFu8PZ-on4BOZHfQ-38" value="&lt;div&gt;1&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;" parent="1" vertex="1">
           <mxGeometry x="6" y="530" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="aXY9Z79izLLK1B3NFVXp-1" value="Code_postal" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="-370" y="125" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aXY9Z79izLLK1B3NFVXp-2" value="Num_civique" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="-480" y="140" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aXY9Z79izLLK1B3NFVXp-3" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0.833;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-385" y="162" as="sourcePoint" />
+            <mxPoint x="-360" y="145" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="aXY9Z79izLLK1B3NFVXp-4" value="" style="endArrow=none;html=1;rounded=0;entryX=0.5;entryY=0.833;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="-427" y="158" as="sourcePoint" />
+            <mxPoint x="-415" y="160" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
