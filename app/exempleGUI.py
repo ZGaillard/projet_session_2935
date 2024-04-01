@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 window = tk.Tk()
 window.title("Exemple de GUI")
 
@@ -11,5 +12,7 @@ label.config(font=("Arial", 40))
 label.config(fg="blue")
 
 label.pack()
+
+
 
 window.mainloop()
