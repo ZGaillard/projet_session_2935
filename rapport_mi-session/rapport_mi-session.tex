@@ -59,9 +59,9 @@
   \large par \\ \vspace{3mm}
   Zakary Gaillard-Duchassin\\ \vspace{3mm}
   Mohammed Aiman Rahmani \\ \vspace{3mm}
-  Mathieu Dominique Lucien Loron \\ \vspace{3mm}
-  Farley Jeannis \\ \vspace{3mm}
   Samuel Argeris \\ \vspace{3mm}
+  Farley Jeannis \\ \vspace{3mm}
+  Mathieu Dominique Lucien Loron \\ \vspace{3mm}
   \vspace{30mm}
   présenté à \\ \vspace{3mm}
   Jihene Rezgui
@@ -73,42 +73,64 @@
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Contenu %%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Introduction}
-
-\newpage
 \section{Modélisation}
 
 \subsection{Modèle Entité-Association}
 \begin{center}
-  \includegraphics[scale=0.85]{../modeleEA.pdf}
+\includegraphics[scale=0.9]{../modeleEA.pdf}
 \end{center}
+  
 \newpage
 
 \subsection{Modèle Relationnel}
 \begin{itemize}
 \item \textbf{Oeuvre}(\underline{id\_oeuvre}, titre, budget,
   date\_sortie, durée, origine, langue, genre)
+  
 \item \textbf{Films}(\underline{\#id\_oeuvre}, \#id\_Studio)
+  
 \item \textbf{Pièces\_Théâtre}(\underline{\#id\_oeuvre}, théâtre)
+  
 \item \textbf{Scènes}(\underline{id\_scène}, titre, budget, type,
   \#id\_oeuvre)
+  
 \item \textbf{Adresses}(\underline{id\_adresse},no\_civique, rue,
   ville, code\_postal, pays, no\_appartement)
-\item \textbf{Renseignement\_Supplémentaire\_Artiste}(
-  \underline{id\_renseignement}, habitudes, sports, relation)
+
+\item \textbf{Habitude}(\underline{id}, nom)
+
+\item \textbf{Sport}(\underline{id}, nom)
+  
 \item \textbf{Artistes}(\underline{id\_artiste}, nom, prénom,
-  date\_naissance, salaire\_min, domaine, \#id\_adresse,
-  \#id\_renseignement)
+  date\_naissance, salaire\_min, domaine, \#id\_adresse)
+  
 \item \textbf{Casting}(\underline{\#id\_oeuvre}, objectif, thème)
+
+\item \textbf{Casting\_Artiste}(\underline{\#id\_artiste, \#id\_oeuvre}, fonction,
+  salaire, date\_debut, date\_fin)
+
+\item \textbf{Relation}(\underline{\#id\_artiste1, \#id\_artiste2}, type\_relation)
+
+\item \textbf{Artiste\_Sport}(\underline{\#id\_artiste, \#id\_sport})
+
+\item \textbf{Artiste\_Habitude}(\underline{\#id\_artiste, \#id\_habitude})
+
 \item \textbf{Compagnies}(\underline{id\_compagnie}, nom,
   type\_industrie, \#id\_adresse)
+  
 \item \textbf{Sponsors}(\underline{\#id\_oeuvres \#id\_compagnie},
   montant)
+  
 \item \textbf{Producteurs}(\underline{\#id\_oeuvres
     \#id\_compagnie})
-\item \textbf{Travail\_Artiste}(\underline{\#id\_artiste
-    \#id\_oeuvre}, rôle, salaire, date\_début, date\_fin)
+  
+
 \end{itemize}
+
+\vspace{5mm}
+\section{SQL}
+\subsection{LDD}
+Le fichier \href{https://github.com/ZGaillard/projet_session_2935/blob/main/database/create.sql}{\color{blue}{\underline{create.sql}}} contient la création de la base de données et des tables.
 
 
 \end{document}
