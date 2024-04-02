@@ -22,11 +22,11 @@ class Data:
         index = self.tuples.index(data_tuple)
         self.tuples[index] = data_tuple
 
-
+#Oeuvre.titre, Oeuvre.budget, Oeuvre.date_sortie, Oeuvre.duree, Oeuvre.origine, Oeuvre.langue, Oeuvre.genre, Compagnie.nom AS nom_studio
 # Data objects
 movies = Data(
-    DBManager().read("Film", "*"),
-    ["id_film", "id_studio"]
+    DBManager().run_function("GetMovies"),
+    ["titre", "budget", "date_sortie", "duree", "origine", "langue", "genre", "nom_studio"]
 )
 
 

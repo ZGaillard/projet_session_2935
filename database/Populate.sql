@@ -158,21 +158,21 @@ VALUES
 INSERT INTO Adresse
 VALUES
     (1, 123, 'Main Street', 'New York', '10001', 'USA', NULL),
-    (2, 456, 'Broadway', 'Los Angeles', '90001', 'USA', 'Apt 101'),
+    (2, 456, 'Broadway', 'Los Angeles', '90001', 'USA', 101),
     (3, 789, 'Rodeo Drive', 'Beverly Hills', '90210', 'USA', NULL),
-    (4, 555, 'Sunset Boulevard', 'Hollywood', '90028', 'USA', 'Suite 200'),
+    (4, 555, 'Sunset Boulevard', 'Hollywood', '90028', 'USA', 201),
     (5, 888, 'Santa Monica Boulevard', 'Santa Monica', '90401', 'USA', NULL),
-    (6, 777, 'Fifth Avenue', 'New York', '10010', 'USA', 'Apt 301'),
+    (6, 777, 'Fifth Avenue', 'New York', '10010', 'USA', 301),
     (7, 999, 'Wilshire Boulevard', 'Los Angeles', '90024', 'USA', NULL),
     (8, 111, 'Melrose Avenue', 'West Hollywood', '90069', 'USA', NULL),
     (9, 222, 'Abbey Road', 'London', 'NW8 9AY', 'UK', NULL),
     (10, 333, 'Piccadilly Circus', 'London', 'W1D 7ET', 'UK', NULL),
     (11, 444, 'Portobello Road', 'London', 'W11 1LA', 'UK', NULL),
-    (12, 555, 'Oxford Street', 'London', 'W1D 1BS', 'UK', 'Flat 2A'),
+    (12, 555, 'Oxford Street', 'London', 'W1D 1BS', 'UK', 202),
     (13, 666, N'Champs-Élysées', 'Paris', '75008', 'France', NULL),
-    (14, 777, 'Rue de Rivoli', 'Paris', '75001', 'France', 'Appartement 3'),
+    (14, 777, 'Rue de Rivoli', 'Paris', '75001', 'France', 831),
     (15, 888, N'Rue du Faubourg Saint-Honoré', 'Paris', '75008', 'France', NULL),
-    (16, 999, N'Place Vendôme', 'Paris', '75001', 'France', 'Apartment 5B'),
+    (16, 999, N'Place Vendôme', 'Paris', '75001', 'France', 591),
     (17, 123, 'Piazza di Spagna', 'Rome', '00187', 'Italy', NULL),
     (18, 234, 'Via Condotti', 'Rome', '00187', 'Italy', NULL),
     (19, 345, 'Via del Corso', 'Rome', '00186', 'Italy', NULL),
@@ -191,22 +191,22 @@ VALUES
     (32, 789, 'Ponte Vecchio', 'Florence', '50125', 'Italy', NULL),
     (33, 890, 'Piazza del Duomo', 'Milan', '20121', 'Italy', NULL),
     (34, 901, 'Vatican City', 'Vatican City', '00120', 'Vatican City', NULL),
-    (35, 123, N'Champs-Élysées', 'Paris', '75008', 'France', 'Apartment 7C'),
-    (36, 234, 'Fifth Avenue', 'New York', '10010', 'USA', 'Suite 501'),
+    (35, 123, N'Champs-Élysées', 'Paris', '75008', 'France', 123),
+    (36, 234, 'Fifth Avenue', 'New York', '10010', 'USA', 11),
     (37, 345, 'Rodeo Drive', 'Beverly Hills', '90210', 'USA', NULL),
     (38, 456, 'Piazza di Spagna', 'Rome', '00187', 'Italy', NULL),
     (39, 567, N'Gran Vía', 'Madrid', '28013', 'Spain', NULL),
     (40, 678, N'Kurfürstendamm', 'Berlin', '10719', 'Germany', NULL),
-    (41, 789, 'Melrose Avenue', 'West Hollywood', '90069', 'USA', 'Apartment 12'),
+    (41, 789, 'Melrose Avenue', 'West Hollywood', '90069', 'USA', 12),
     (42, 890, 'Portobello Road', 'London', 'W11 1LA', 'UK', NULL),
-    (43, 901, N'Passeig de Gràcia', 'Barcelona', '08008', 'Spain', 'Flat 3B'),
+    (43, 901, N'Passeig de Gràcia', 'Barcelona', '08008', 'Spain', 34),
     (44, 123, 'Piccadilly Circus', 'London', 'W1D 7ET', 'UK', NULL),
     (45, 234, N'Champs-Élysées', 'Paris', '75008', 'France', NULL),
-    (46, 345, 'Alexanderplatz', 'Berlin', '10178', 'Germany', 'Apartment 9'),
-    (47, 456, N'Gran Vía', 'Madrid', '28013', 'Spain', 'Apartment 2B'),
+    (46, 345, 'Alexanderplatz', 'Berlin', '10178', 'Germany', 90),
+    (47, 456, N'Gran Vía', 'Madrid', '28013', 'Spain', 67),
     (48, 567, N'Friedrichstraße', 'Berlin', '10117', 'Germany', NULL),
-    (49, 678, 'Rue de Rivoli', 'Paris', '75001', 'France', 'Flat 4D'),
-    (50, 789, 'Abbey Road', 'London', 'NW8 9AY', 'UK', 'Flat 6A');
+    (49, 678, 'Rue de Rivoli', 'Paris', '75001', 'France', 36),
+    (50, 789, 'Abbey Road', 'London', 'NW8 9AY', 'UK', 78);
 
 INSERT INTO Adresse
     (id, no_civique, rue, ville, code_postal, pays, no_appartement)
@@ -1377,6 +1377,10 @@ VALUES
     (80, 21, 'Friends');
 
 
+
+EXEC GenerateArtisteSportTuples @tupleCount = 100;
+
+EXEC GenerateArtisteHabitudeTuples @tupleCount = 100;
 
 
 

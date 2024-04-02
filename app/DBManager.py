@@ -36,11 +36,17 @@ class DBManager:
         sql_command = f"DELETE FROM {table_name} WHERE {condition};"
         self.cursor.execute(sql_command)
 
-    def execute(self, sql_command):
-        self.cursor.execute(sql_command)
+    def execute_file(self, file_path):
+        with open(file_path, 'r') as file:
+            sql_command = file.read()
+            self.cursor.execute(sql_command)
 
-    def run_function(self, function_name, *args):
-        self.cursor.execute(f"EXEC {function_name} {args};")
+    def run_function(self, function_name):
+        print(f"EXEC {function_name}")
+        self.cursor.execute(f"EXEC {function_name}")
+        return self.cursor.fetchall()
+
+
 
     def __del__(self):
         self.cursor.close()

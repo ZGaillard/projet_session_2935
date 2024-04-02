@@ -77,8 +77,9 @@ class SearchableTable(Treeview):
             self.column(column_name, width=150, minwidth=150, stretch=YES)
             self.heading(column_name, text=column_name, anchor=W)
 
-        for data_tuple in self.data:
-            self.insert("", 1, values=data_tuple)
+        # insert data
+        for row in self.data:
+            self.insert("", "end", values=row)
 
 
 class SearchMovieMenu(Frame):
