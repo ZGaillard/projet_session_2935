@@ -19,7 +19,6 @@ class MainApplication(tk.Tk):
         self.frame.pack(fill=tk.BOTH, expand=True)
 
 
-
 if __name__ == "__main__":
     app = MainApplication()
     app.mainloop()

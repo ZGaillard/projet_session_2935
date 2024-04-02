@@ -10,7 +10,8 @@ class Movie(object):
 
 
 class TheaterPlay(object):
-    def __init__(self, title, date, budget, length, origin, language, genra, theater):
+    def __init__(self, title, date, budget, length, origin, language, genra,
+                 theater):
         self.title = title
         self.date = date
         self.budget = budget
@@ -19,3 +20,11 @@ class TheaterPlay(object):
         self.language = language
         self.genra = genra
         self.theater = theater
+
+
+class Actor(object):
+    pass
+
+
+class Casting(object):
+    pass

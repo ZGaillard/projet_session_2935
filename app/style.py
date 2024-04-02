@@ -1,12 +1,12 @@
 from tkinter import Button
 
 STYLE_CONFIG = {
-    "background": "white",
-    "font": ("Arial", 20),
-    "small_font": ("Arial", 15),
-    "big_font": ("Arial", 40),
+    "background"       : "white",
+    "font"             : ("Arial", 20),
+    "small_font"       : ("Arial", 15),
+    "big_font"         : ("Arial", 40),
     "button_background": "blue",
-    "button_hover": "#30D0FF",
+    "button_hover"     : "#30D0FF",
     "button_foreground": "white",
 }
 

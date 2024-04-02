@@ -1,8 +1,5 @@
 from tkinter import Menu
 
-
-from app.menuFunctions import onNewMovie, onNewTheaterPlay, onNewActor, onNewCasting, onSearchMovie, onSearchTheaterPlay, onSearchActor, onSearchCasting
-
 from app.style import STYLE_CONFIG
 
 
@@ -18,24 +15,40 @@ class TopMenu(Menu):
 
         # sub menu new
         sub_menu_new = Menu(file_menu, background=STYLE_CONFIG["background"])
-        self.new_menu_command(sub_menu_new, "New movie", onNewMovie)
-        self.new_menu_command(sub_menu_new, "New theater play", onNewTheaterPlay)
-        self.new_menu_command(sub_menu_new, "New actor", onNewActor)
-        self.new_menu_command(sub_menu_new, "New casting", onNewCasting)
+        from app.newElemMenu import NewMovieMenu, NewTheaterPlayMenu, \
+            NewActorMenu, NewCastingMenu
+        self.new_menu_command(sub_menu_new, "New movie",
+                              lambda: parent.switch_frame(NewMovieMenu))
+        self.new_menu_command(sub_menu_new, "New theater play",
+                              lambda: parent.switch_frame(NewTheaterPlayMenu))
+        self.new_menu_command(sub_menu_new, "New actor",
+                              lambda: parent.switch_frame(NewActorMenu))
+        self.new_menu_command(sub_menu_new, "New casting",
+                              lambda: parent.switch_frame(NewCastingMenu))
 
         # sub menu search
         sub_menu_search = Menu(file_menu, background=STYLE_CONFIG["background"])
-        self.new_menu_command(sub_menu_search, "Search movie", onSearchMovie)
-        self.new_menu_command(sub_menu_search, "Search theater play", onSearchTheaterPlay)
-        self.new_menu_command(sub_menu_search, "Search actor", onSearchActor)
-        self.new_menu_command(sub_menu_search, "Search casting", onSearchCasting)
+        from app.searchMenu import SearchMovieMenu, SearchTheaterPlayMenu, \
+            SearchActorMenu, SearchCastingMenu
+        self.new_menu_command(sub_menu_search, "Search movie",
+                              lambda: parent.switch_frame(SearchMovieMenu))
+        self.new_menu_command(sub_menu_search, "Search theater play",
+                              lambda: parent.switch_frame(
+                                  SearchTheaterPlayMenu))
+        self.new_menu_command(sub_menu_search, "Search actor",
+                              lambda: parent.switch_frame(SearchActorMenu))
+        self.new_menu_command(sub_menu_search, "Search casting",
+                              lambda: parent.switch_frame(SearchCastingMenu))
 
-        file_menu.add_cascade(label="New", menu=sub_menu_new, font=STYLE_CONFIG["font"])
-        file_menu.add_cascade(label="Search", menu=sub_menu_search, font=STYLE_CONFIG["font"])
+        file_menu.add_cascade(label="New", menu=sub_menu_new,
+                              font=STYLE_CONFIG["font"])
+        file_menu.add_cascade(label="Search", menu=sub_menu_search,
+                              font=STYLE_CONFIG["font"])
         file_menu.add_separator()
         self.new_menu_command(file_menu, "Exit", self.onExit)
 
-        self.add_cascade(label="Menu", menu=file_menu, font=STYLE_CONFIG["font"])
+        self.add_cascade(label="Menu", menu=file_menu,
+                         font=STYLE_CONFIG["font"])
 
     @staticmethod
     def new_menu_command(menu, text, command):
