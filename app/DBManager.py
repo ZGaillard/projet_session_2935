@@ -46,8 +46,6 @@ class DBManager:
         self.cursor.execute(f"EXEC {function_name}")
         return self.cursor.fetchall()
 
-
-
     def __del__(self):
         self.cursor.close()
         self.conn.close()

@@ -1,6 +1,7 @@
-from tkinter import *
+import ttkbootstrap as ttk
+from tkinter import Frame, Label, LEFT, SUNKEN, X, BOTH
 
-from app.style import STYLE_CONFIG, create_button
+from app.style import new_primary_button
 
 
 class NewElemMenu(Frame):
@@ -14,39 +15,38 @@ class NewElemMenu(Frame):
     def initUI(self):
         self.parent.title("New Element Menu")
         self.parent.geometry("1600x900")
-        self.configure(background=STYLE_CONFIG["background"])
+
         self.pack(fill=BOTH, expand=True)
 
     def initFrame(self):
         # title
-        title = Label(self, text="New Element Menu",
-                      background=STYLE_CONFIG["background"])
+        title = Label(self, text="New Element Menu")
         title.config(font=("Arial", 40))
         title.pack(pady=60)
 
         # button for each new element
-        button_container_1 = Frame(self, background=STYLE_CONFIG["background"])
+        button_container_1 = Frame(self)
         button_container_1.pack(pady=20)
 
-        n_movie_button = create_button(button_container_1, "New movie",
-                                       lambda: self.parent.switch_frame(
+        n_movie_button = new_primary_button(button_container_1, "New movie",
+                                            lambda: self.parent.switch_frame(
                                            NewMovieMenu))
         n_movie_button.pack(side=LEFT, padx=10)
-        n_theater_play_button = create_button(button_container_1,
+        n_theater_play_button = new_primary_button(button_container_1,
                                               "New theater play",
-                                              lambda: self.parent.switch_frame(
+                                                   lambda: self.parent.switch_frame(
                                                   NewTheaterPlayMenu))
         n_theater_play_button.pack(side=LEFT, padx=10)
 
-        button_container_2 = Frame(self, background=STYLE_CONFIG["background"])
+        button_container_2 = Frame(self)
         button_container_2.pack(pady=20)
 
-        n_actor_button = create_button(button_container_2, "New actor",
-                                       lambda: self.parent.switch_frame(
-                                           NewActorMenu))
-        n_actor_button.pack(side=LEFT, padx=10)
-        n_casting_button = create_button(button_container_2, "New casting",
-                                         lambda: self.parent.switch_frame(
+        n_artist_button = new_primary_button(button_container_2, "New artist",
+                                            lambda: self.parent.switch_frame(
+                                           NewArtistMenu))
+        n_artist_button.pack(side=LEFT, padx=10)
+        n_casting_button = new_primary_button(button_container_2, "New casting",
+                                              lambda: self.parent.switch_frame(
                                              NewCastingMenu))
         n_casting_button.pack(side=LEFT, padx=10)
 
@@ -55,8 +55,8 @@ class NewElemMenu(Frame):
 
         # button to go back to main menu
         from app.mainMenu import MainMenu
-        back_button = create_button(self, "Back",
-                                    lambda: self.parent.switch_frame(MainMenu))
+        back_button = new_primary_button(self, "Back",
+                                         lambda: self.parent.switch_frame(MainMenu))
         back_button.pack(pady=20)
 
 
@@ -68,7 +68,7 @@ class NewTheaterPlayMenu(Frame):
     pass
 
 
-class NewActorMenu(Frame):
+class NewArtistMenu(Frame):
     pass
 
 

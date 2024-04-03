@@ -1,4 +1,4 @@
-CREATE PROCEDURE GenerateArtisteSportTuples
+CREATE OR ALTER PROCEDURE GenerateArtisteSportTuples
     @tupleCount INT
 AS
 BEGIN

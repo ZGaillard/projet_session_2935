@@ -1,4 +1,4 @@
-CREATE PROCEDURE GenerateArtisteHabitudeTuples 
+CREATE OR ALTER PROCEDURE GenerateArtisteHabitudeTuples
     @tupleCount INT
 AS
 BEGIN

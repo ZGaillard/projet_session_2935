@@ -1,7 +1,10 @@
 import tkinter as tk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
 import mainMenu
 from app.DBManager import DBManager
+
 
 
 class MainApplication(tk.Tk):
@@ -12,11 +15,13 @@ class MainApplication(tk.Tk):
         self.db_manager.execute_file("database/Populate.sql")
         #self.db_manager.execute_file("database/GenArtisteHabit.sql")
         #self.db_manager.execute_file("database/GenArtisteSport.sql")
-
-
+        #self.db_manager.execute_file("database/Queries.sql")
 
         # UI
         tk.Tk.__init__(self)
+
+        style = ttk.Style()
+
         self.title("Casting Manager")
         self.geometry("1600x900")
         self.frame = None

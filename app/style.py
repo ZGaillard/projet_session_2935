@@ -1,25 +1,27 @@
-from tkinter import Button
+import tkinter as tk
+import ttkbootstrap as ttk
 
-STYLE_CONFIG = {
-    "background"       : "white",
-    "font"             : ("Arial", 20),
-    "small_font"       : ("Arial", 15),
-    "big_font"         : ("Arial", 40),
-    "button_background": "blue",
-    "button_hover"     : "#30D0FF",
-    "button_foreground": "white",
-}
+from ttkbootstrap.constants import *
 
 
-def create_button(container, text, command):
-    button = Button(
+def new_primary_button(container, text, command):
+    button = ttk.Button(
         container,
         text=text,
         command=command,
-        background=STYLE_CONFIG["button_background"],
-        activebackground=STYLE_CONFIG["button_hover"],
-        foreground=STYLE_CONFIG["button_foreground"],
-        font=STYLE_CONFIG["font"],
-        width=20
+        style="primary.TButton",
+        width=18
+    )
+    return button
+
+
+def new_primary_butt(container, text, command):
+    button = ttk.Button(
+        container,
+        text=text,
+        command=command,
+        style="danger.TButton",
+        width=18
+
     )
     return button

@@ -22,16 +22,28 @@ class Data:
         index = self.tuples.index(data_tuple)
         self.tuples[index] = data_tuple
 
-#Oeuvre.titre, Oeuvre.budget, Oeuvre.date_sortie, Oeuvre.duree, Oeuvre.origine, Oeuvre.langue, Oeuvre.genre, Compagnie.nom AS nom_studio
+
 # Data objects
 movies = Data(
-    DBManager().run_function("GetMovies"),
-    ["titre", "budget", "date_sortie", "duree", "origine", "langue", "genre", "nom_studio"]
+    DBManager().run_function("getMovies"),
+    ["Titre", "Budget", "Date de Sortie", "Durée", "Origine", "Langue",
+     "Genre", "Nom du Studio"]
 )
 
 
 theater_plays = Data(
-    DBManager().read("Piece", "*"),
-    ["id_piece", "id_theater"]
+    DBManager().run_function("getPlays"),
+    ["Titre", "Budget", "Date de Sortie", "Durée", "Origine", "Langue",
+     "Genre", "Nom du théâtre"]
 )
 
+
+artists = Data(
+    DBManager().run_function("getArtists"),
+    ["Nom", "Prénom", "Date de Naissance", "Salaire Min", "Domaine", "No Civique", "Rue", "Ville", "Code Postal", "Pays", "No Appartement"]
+)
+
+castings = Data(
+    DBManager().run_function("getCastings"),
+    ["Titre de l'Oeuvre", "Objectif", "Thème"]
+)

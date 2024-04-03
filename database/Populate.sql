@@ -1383,4 +1383,3 @@ EXEC GenerateArtisteSportTuples @tupleCount = 100;
 EXEC GenerateArtisteHabitudeTuples @tupleCount = 100;
 
 
-
