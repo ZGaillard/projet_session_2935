@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 
 from app.newElemMenu import NewElemMenu as NewMenu
-from app.style import new_primary_button, new_primary_butt
+from app.style import new_primary_button, new_secondary_button
 from app.topMenu import TopMenu
 
 
@@ -61,7 +61,7 @@ class MainMenu(ttk.Frame):
         separator.pack(fill=X, pady=10)
 
         # button exit
-        exit_button = new_primary_butt(self, "Exit", self.onExit)
+        exit_button = new_secondary_button(self, "Exit", self.onExit)
         exit_button.pack(pady=20)
 
     def onExit(self):

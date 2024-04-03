@@ -15,7 +15,7 @@ def new_primary_button(container, text, command):
     return button
 
 
-def new_primary_butt(container, text, command):
+def new_secondary_button(container, text, command):
     button = ttk.Button(
         container,
         text=text,

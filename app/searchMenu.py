@@ -2,7 +2,7 @@ from tkinter import *
 
 import ttkbootstrap as ttk
 
-from app.style import new_primary_button, new_primary_butt
+from app.style import new_primary_button
 
 
 class SearchMenu(ttk.Frame):
@@ -57,7 +57,9 @@ class SearchMenu(ttk.Frame):
         # button to go back to main menu
         from app.mainMenu import MainMenu
         back_button = new_primary_button(
-            self, "Back", lambda: self.parent.switch_frame(MainMenu))
+            self, "Back",
+            lambda: self.parent.switch_frame(MainMenu)
+        )
         back_button.pack(pady=20)
 
     def destroy(self):
@@ -71,30 +73,62 @@ class SearchableTable(ttk.Treeview):
         # Search bar and combobox for column selection
         search_bar_container = Frame(parent)
         search_bar_container.pack(pady=20)
-        search_bar = ttk.Entry(search_bar_container)
+
+        self.search_text = StringVar()
+        search_bar = ttk.Entry(
+            search_bar_container,
+            textvariable=self.search_text
+        )
         search_bar.pack(side=LEFT, padx=10)
-        search_combobox = ttk.Combobox(search_bar_container,
-                                       values=data.get_column_names(),
-                                       state='readonly', width=10)
-        search_combobox.current(0)
-        search_combobox.pack(side=LEFT, padx=10)
+
+        self.search_combobox = ttk.Combobox(
+            search_bar_container,
+            values=data.get_column_names(),
+            state='readonly', width=10
+        )
+        self.search_combobox.current(0)
+        self.search_combobox.pack(side=LEFT, padx=10)
+
+        self.search_text.trace(
+            "w",
+            lambda *args: self.search(self.search_combobox)
+        )
 
         self.parent = parent
         self.data = data.get_tuples()
         self.column_names = data.get_column_names()
         ttk.Treeview.__init__(
-            self, parent, columns=self.column_names, show="headings"
+            self, parent,
+            columns=self.column_names,
+            show="headings"
         )
         # determine column width with respect to the data
         for i, column_name in enumerate(self.column_names):
-            mean_width = sum([len(str(row[i])) for row in self.data]) // len(
-                self.data)
-            self.column(column_name, width=mean_width * 24, minwidth=100,
-                        stretch=YES)
+            mean_width = sum(
+                len(str(row[i])) for row in self.data
+            ) // len(self.data)
+            self.column(column_name, width=mean_width * 24,
+                        minwidth=100, stretch=YES
+                        )
+
             self.heading(column_name, text=column_name, anchor=W)
         # insert data
         for row in self.data:
             self.insert("", "end", values=row)
+
+    def search(self, search_combobox):
+        self.reset()
+        search_text = self.search_text.get()
+        search_column = search_combobox.get()
+        search_index = self.column_names.index(search_column)
+        for row in self.data:
+            if search_text in str(row[search_index]):
+                self.insert("", "end", values=row)
+
+    def reset(self):
+        x = self.get_children()
+        for item in x:
+            self.delete(item)
 
 
 class SearchMovieMenu(Frame):
@@ -156,31 +190,31 @@ class SearchTheaterPlayMenu(Frame):
 
 
 class SearchArtistMenu(Frame):
-        def __init__(self, parent):
-            Frame.__init__(self, parent)
-            self.parent = parent
-            self.parent.title("Search Artist Menu")
-            self.pack(fill=BOTH, expand=True)
+    def __init__(self, parent):
+        Frame.__init__(self, parent)
+        self.parent = parent
+        self.parent.title("Search Artist Menu")
+        self.pack(fill=BOTH, expand=True)
 
-            title = ttk.Label(self, text="Search Artist Menu", )
-            title.config(font=("Arial", 20))
-            title.pack(pady=40)
+        title = ttk.Label(self, text="Search Artist Menu", )
+        title.config(font=("Arial", 20))
+        title.pack(pady=40)
 
-            from app.data import artists
-            artists_table = SearchableTable(self, artists)
-            artists_table.pack(pady=20)
+        from app.data import artists
+        artists_table = SearchableTable(self, artists)
+        artists_table.pack(pady=20)
 
-            separator = Frame(self, height=3, bd=0, relief=SUNKEN)
-            separator.pack(fill=X, pady=10)
+        separator = Frame(self, height=3, bd=0, relief=SUNKEN)
+        separator.pack(fill=X, pady=10)
 
-            back_button = new_primary_button(
-                self, "Back",
-                lambda: self.parent.switch_frame(SearchMenu)
-            )
-            back_button.pack(pady=20)
+        back_button = new_primary_button(
+            self, "Back",
+            lambda: self.parent.switch_frame(SearchMenu)
+        )
+        back_button.pack(pady=20)
 
-        def destroy(self):
-            Frame.destroy(self)
+    def destroy(self):
+        Frame.destroy(self)
 
 
 class SearchCastingMenu(Frame):
