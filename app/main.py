@@ -12,9 +12,16 @@ class MainApplication(tk.Tk):
         # Database
         self.db_manager = DBManager()
         self.db_manager.execute_file("database/CreateUpdated.sql")
+        self.db_manager.execute_file("database/GenArtisteHabit.sql")
+        self.db_manager.execute_file("database/GenArtisteSport.sql")
         self.db_manager.execute_file("database/Populate.sql")
-        #self.db_manager.execute_file("database/GenArtisteHabit.sql")
-        #self.db_manager.execute_file("database/GenArtisteSport.sql")
+
+        # IMPORTANT
+        # Queries will need to be separated into different files
+        # for each procedure, because pymssql does not like the
+        # GO keyword between procedures for some reason
+        # for now, execute the whole file in azure data studio or something
+        # and then refresh the database in pycharm
         #self.db_manager.execute_file("database/Queries.sql")
 
         # UI
