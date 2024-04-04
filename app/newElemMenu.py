@@ -14,8 +14,6 @@ class NewElemMenu(Frame):
 
     def initUI(self):
         self.parent.title("New Element Menu")
-        self.parent.geometry("1600x900")
-
         self.pack(fill=BOTH, expand=True)
 
     def initFrame(self):
