@@ -26,24 +26,65 @@ class Data:
 # Data objects
 movies = Data(
     DBManager().run_procedure("getMovies"),
-    ["Titre", "Budget", "Date de Sortie", "Durée", "Origine", "Langue",
-     "Genre", "Nom du Studio"]
+    [
+        "Titre",
+        "Budget",
+        "Date de Sortie",
+        "Durée",
+        "Origine",
+        "Langue",
+        "Genre",
+        "Nom du Studio",
+    ],
 )
 
 
 theater_plays = Data(
     DBManager().run_procedure("getPlays"),
-    ["Titre", "Budget", "Date de Sortie", "Durée", "Origine", "Langue",
-     "Genre", "Nom du théâtre"]
+    [
+        "Titre",
+        "Budget",
+        "Date de Sortie",
+        "Durée",
+        "Origine",
+        "Langue",
+        "Genre",
+        "Nom du théâtre",
+    ],
 )
 
 
 artists = Data(
     DBManager().run_procedure("getArtists"),
-    ["Nom", "Prénom", "Date de Naissance", "Salaire Min", "Domaine", "No Civique", "Rue", "Ville", "Code Postal", "Pays", "No Appartement"]
+    [
+        "Nom",
+        "Prénom",
+        "Date de Naissance",
+        "Salaire Min",
+        "Domaine",
+        "No Civique",
+        "Rue",
+        "Ville",
+        "Code Postal",
+        "Pays",
+        "No Appartement",
+    ],
 )
 
 castings = Data(
-    DBManager().run_procedure("getCastings"),
-    ["Titre de l'Oeuvre", "Objectif", "Thème"]
+    DBManager().run_procedure("getCastings"), ["Titre de l'Oeuvre", "Objectif", "Thème"]
+)
+
+compagnies = Data(
+    DBManager().run_procedure("getCompagnies"),
+    [
+        "Nom",
+        "Type Industrie",
+        "No Civique",
+        "Rue",
+        "Ville",
+        "Code Postal",
+        "Pays",
+        "No Appartement",
+    ],
 )
