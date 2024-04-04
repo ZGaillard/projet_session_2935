@@ -20,22 +20,23 @@ Personnellement, j'utilise Azure Data Studio pour gérer la base de données et 
 ## Liste des tâches
 ### Application :
 - [] Installer les modules nécessaires et faire fonctionner le code de base (connexion à la base de données)
-- [] Créer les fenêtres pour ajouter des éléments à la base de données
+- [] Créer les fenêtres pour ajouter des éléments à la base de données (`newElemMenu.py`)
   -- [] Films
   -- [] Pièces de théâtre
   -- [] Artistes
   -- [] Casting
-Cette tâche parait simple, mais c'est assez complexe en fait car il faut gérer le fait que
+Cette tâche parait simple, mais c'est assez complexe en fait, car il faut gérer le fait que
 les données sont stockées dans plusieurs tables. Par exemple, pour ajouter un film, il faut
-ajouter un tuple dans la table Film, mais aussi dans la table Oeuvre. Je vous conseille de
+ajouter un tuple dans la table Film, mais aussi dans la table Œuvre. Je vous conseille de
 faire des procédures puis utiliser `DBManager.run_procedure()` ou `DBManager.run_procedure_with_args()`
-Il faut aussi lancer la définition de la procédure avec `DBManager.run_file()`
+Il faut aussi lancer la définition de la procédure avec `DBManager.run_file()` dans `main.py`
+
 
 
 ### Base de données :
 - [] Normaliser la base de données
   -- [] Faire la liste des dépendances fonctionnelles pour chaque table
-  -- [] Expliquer pourquoi chaque table est en 1NF, 2NF, 3NF
+  -- [] Expliquer pourquoi chaque table est en 1NF, 2NF, 3NF (Si ce n'est pas le cas, la normaliser en 3NF) et m'avertir pour le modifier dans le code
   -- [] Créer un fichier SQL pour 10 requêtes complexes
   -- [] Améliorer la création des tables (ajouter des contraintes, des triggers, etc.)
   -- [] Créer des procédures, fonctions, triggers, curseurs, views, etc. (Le but est de montrer à la prof qu'on sait utiliser ces outils)
