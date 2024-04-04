@@ -280,20 +280,98 @@ class NewArtistMenu(Frame):
         self.initFrame()
 
     def initUI(self):
-        self.parent.title("New Artist Menu")
+        self.parent.title("New Play Menu")
         self.parent.geometry("1600x900")
 
         self.pack(fill=BOTH, expand=True)
 
     def initFrame(self):
-        title = Label(self, text="New Artist Menu")
+        title = Label(self, text="New Play Menu")
         title.config(font=("Arial", 40))
         title.pack(pady=60)
 
+        self.prenom = ttk.StringVar(value="")
+        self.nom = ttk.StringVar(value="")
+        self.date_naissance = ttk.StringVar(value="")
+        self.salaire_min = ttk.IntVar(value=0)
+        self.domaine = ttk.StringVar(value="")
+        self.no_civique = ttk.IntVar(value=0)
+        self.rue = ttk.StringVar(value="")
+        self.ville = ttk.StringVar(value="")
+        self.code_postal = ttk.StringVar(value="")
+        self.pays = ttk.StringVar(value="")
+        self.no_appartement = ttk.IntVar(value=None)
+        # form entries
+        self.create_form_entry("Prénom", self.prenom)
+        self.create_form_entry("Nom", self.nom)
+        self.create_form_entry("Date de naissance", self.date_naissance)
+        self.create_form_entry("Salaire minimum", self.salaire_min)
+        self.create_form_entry("Domaine", self.domaine)
+        self.create_form_entry("Numéro Civique", self.no_civique)
+        self.create_form_entry("Rue", self.rue)
+        self.create_form_entry("Ville", self.ville)
+        self.create_form_entry("Code Postal", self.code_postal)
+        self.create_form_entry("Pays", self.pays)
+        self.create_form_entry("Numéro appartement", self.no_appartement)
         back_button = new_primary_button(
             self, "Back", lambda: self.parent.switch_frame(NewElemMenu)
         )
+        self.create_buttonbox()
         back_button.pack(pady=20)
+
+    def create_form_entry(self, label, variable):
+        container = ttk.Frame(self)
+        container.pack(fill=X, expand=YES, pady=5)
+
+        lbl = ttk.Label(master=container, text=label.title(), width=10)
+        lbl.pack(side=LEFT, padx=5)
+
+        ent = ttk.Entry(master=container, textvariable=variable)
+        ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
+
+    def create_buttonbox(self):
+        container = ttk.Frame(self)
+        container.pack(fill=X, expand=YES, pady=(15, 10))
+
+        sub_btn = ttk.Button(
+            master=container,
+            text="Add",
+            command=self.on_submit,
+            bootstyle=SUCCESS,
+            width=6,
+        )
+        sub_btn.pack(padx=5)
+        sub_btn.focus_set()
+
+    def on_submit(self):
+        try:
+
+            DBManager().run_procedure_with_args(
+                "AddAdresse",
+                f"@id={700}, @no_civique={self.no_civique.get()}, @rue='{self.rue.get()}', @ville='{self.ville.get()}', @code_postal='{self.code_postal.get()}', @pays='{self.pays.get()}', @no_appartement={self.no_appartement.get()}",
+            )
+            DBManager().run_procedure_with_args(
+                "AddArtist",
+                f"@id={900}, @nom='{self.nom.get()}', @prenom='{self.prenom.get()}', @date_naissance='{self.date_naissance.get()}', @salaire_min={self.salaire_min.get()},@domaine='{self.domaine.get()}',@id_adresse={700}",
+            )
+            Messagebox.ok("Artist added successfully", "Success")
+            self.clear_form()
+        except:
+            traceback.print_exc()
+            Messagebox.show_error("Enter valid datas please", "Error")
+
+    def clear_form(self):
+        self.nom.set("")
+        self.prenom.set("")
+        self.date_naissance.set("")
+        self.domaine.set("")
+        self.pays.set("")
+        self.no_appartement.set("")
+        self.no_civique.set(0)
+        self.code_postal.set("")
+        self.rue.set("")
+        self.salaire_min.set(0)
+        self.ville.set("")
 
 
 class NewCastingMenu(Frame):

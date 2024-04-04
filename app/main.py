@@ -26,6 +26,8 @@ class MainApplication(tk.Tk):
         self.db_manager.run_file("../database/DefAddMovies.sql")
         self.db_manager.run_file("../database/DefGetCompagnies.sql")
         self.db_manager.run_file("../database/DefAddPlays.sql")
+        self.db_manager.run_file("../database/DefAddArtist.sql")
+        self.db_manager.run_file("../database/DefAddAdresse.sql")
 
         # UI
         tk.Tk.__init__(self)

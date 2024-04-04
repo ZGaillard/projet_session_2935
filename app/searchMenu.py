@@ -233,8 +233,11 @@ class SearchArtistMenu(Frame):
 
         from data import artists
 
-        artists_table = SearchableTable(self, artists)
-        artists_table.pack(pady=20)
+        self.artists_table = SearchableTable(self, artists)
+        self.artists_table.pack(pady=20)
+
+        update_button = ttk.Button(self, text="Update", command=self.update_table)
+        update_button.pack(pady=20)
 
         separator = Frame(self, height=3, bd=0, relief=SUNKEN)
         separator.pack(fill=X, pady=10)
@@ -243,6 +246,15 @@ class SearchArtistMenu(Frame):
             self, "Back", lambda: self.parent.switch_frame(SearchMenu)
         )
         back_button.pack(pady=20)
+
+    def update_table(self):
+        import data
+
+        importlib.reload(data)
+
+        from data import artists
+
+        self.artists_table.update_data(artists.get_tuples())
 
     def destroy(self):
         Frame.destroy(self)
