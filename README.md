@@ -6,9 +6,7 @@ des widgets. La base de données est gérée avec SQL-Server et le module pymssq
 
 ## Installation
 ```bash
-pip install tkinter
-pip install ttkbootstrap
-pip install pymssql
+pip install -r requirements.txt
 ```
 
 Je vous conseille d'utiliser PyCharm pour lancer le projet et vous connecter à la base de données.
