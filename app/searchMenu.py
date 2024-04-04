@@ -118,11 +118,11 @@ class SearchableTable(ttk.Treeview):
 
     def search(self, search_combobox):
         self.reset()
-        search_text = self.search_text.get()
+        search_text = self.search_text.get().lower()
         search_column = search_combobox.get()
         search_index = self.column_names.index(search_column)
         for row in self.data:
-            if search_text in str(row[search_index]):
+            if search_text in str(row[search_index]).lower():
                 self.insert("", "end", values=row)
 
     def reset(self):
