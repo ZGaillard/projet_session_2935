@@ -1,7 +1,7 @@
 import ttkbootstrap as ttk
 from tkinter import Frame, Label, LEFT, SUNKEN, X, BOTH
 
-from app.style import new_primary_button
+from style import new_primary_button
 
 
 class NewElemMenu(Frame):

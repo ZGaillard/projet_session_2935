@@ -1,9 +1,9 @@
 from tkinter import *
 from tkinter import ttk
 
-from app.newElemMenu import NewElemMenu as NewMenu
-from app.style import new_primary_button, new_secondary_button
-from app.topMenu import TopMenu
+from newElemMenu import NewElemMenu as NewMenu
+from style import new_primary_button, new_secondary_button
+from topMenu import TopMenu
 
 
 class MainMenu(ttk.Frame):
@@ -31,7 +31,7 @@ class MainMenu(ttk.Frame):
 
         # image from : https://www.vecteezy.com/vector-art/620081-film-logo-and-symbols-vector-template
         image = PhotoImage(
-            file="app/ressources/logo.png")
+            file="ressources/logo.png")
         label = Label(self, image=image)
         label.image = image
         label.pack(pady=30)
@@ -45,7 +45,7 @@ class MainMenu(ttk.Frame):
         button_container.pack(pady=20)
 
         # button to search
-        from app.searchMenu import SearchMenu
+        from searchMenu import SearchMenu
         search_button = new_primary_button(button_container, "Search",
                                            lambda: self.parent.switch_frame(
                                           SearchMenu))

@@ -3,8 +3,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 import mainMenu
-from app.DBManager import DBManager
-
+from DBManager import DBManager
 
 
 class MainApplication(tk.Tk):
@@ -12,18 +11,18 @@ class MainApplication(tk.Tk):
         # Database
         self.db_manager = DBManager()
         # This needs to be run first
-        self.db_manager.run_file("database/CreateUpdated.sql")
+        self.db_manager.run_file("../database/CreateUpdated.sql")
 
         # This two procedure definition needs to be run before Populate.sql
-        self.db_manager.run_file("database/GenArtisteHabit.sql")
-        self.db_manager.run_file("database/GenArtisteSport.sql")
+        self.db_manager.run_file("../database/GenArtisteHabit.sql")
+        self.db_manager.run_file("../database/GenArtisteSport.sql")
 
-        self.db_manager.run_file("database/Populate.sql")
+        self.db_manager.run_file("../database/Populate.sql")
 
-        self.db_manager.run_file("database/DefGetArtists.sql")
-        self.db_manager.run_file("database/DefGetMovies.sql")
-        self.db_manager.run_file("database/DefGetPlays.sql")
-        self.db_manager.run_file("database/DefGetCastings.sql")
+        self.db_manager.run_file("../database/DefGetArtists.sql")
+        self.db_manager.run_file("../database/DefGetMovies.sql")
+        self.db_manager.run_file("../database/DefGetPlays.sql")
+        self.db_manager.run_file("../database/DefGetCastings.sql")
 
         # UI
         tk.Tk.__init__(self)

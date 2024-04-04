@@ -12,7 +12,7 @@ class TopMenu(ttk.Menu):
 
         # sub menu new
         sub_menu_new = ttk.Menu(self)
-        from app.newElemMenu import NewMovieMenu, NewTheaterPlayMenu, \
+        from newElemMenu import NewMovieMenu, NewTheaterPlayMenu, \
             NewArtistMenu, NewCastingMenu
         self.new_menu_command(sub_menu_new, "New movie",
                               lambda: parent.switch_frame(NewMovieMenu))
@@ -25,7 +25,7 @@ class TopMenu(ttk.Menu):
 
         # sub menu search
         sub_menu_search = ttk.Menu(self)
-        from app.searchMenu import SearchMovieMenu, SearchTheaterPlayMenu, \
+        from searchMenu import SearchMovieMenu, SearchTheaterPlayMenu, \
             SearchArtistMenu, SearchCastingMenu
         self.new_menu_command(sub_menu_search, "Search movie",
                               lambda: parent.switch_frame(SearchMovieMenu))
