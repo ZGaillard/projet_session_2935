@@ -30,7 +30,7 @@ DROP TABLE IF EXISTS Adresse;
 
 
 CREATE TABLE Oeuvre (
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     titre VARCHAR(50),
     budget INT,
     date_sortie DATE,
@@ -40,7 +40,7 @@ CREATE TABLE Oeuvre (
     genre VARCHAR(50),
 );
 CREATE TABLE Adresse(
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     no_civique INT,
     rue VARCHAR(50),
     ville VARCHAR(50),
@@ -49,15 +49,15 @@ CREATE TABLE Adresse(
     no_appartement INT,
 );
 CREATE TABLE Habitude(
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     nom VARCHAR(50),
 );
 CREATE TABLE Sport(
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     nom VARCHAR(50),
 );
 CREATE TABLE Compagnie(
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     nom VARCHAR(50),
     type_industrie VARCHAR(50),
     id_adresse INT,
@@ -75,7 +75,7 @@ CREATE TABLE Piece(
     CONSTRAINT fk_piece_oeuvre FOREIGN KEY (id_oeuvre) REFERENCES Oeuvre(id),
 );
 CREATE TABLE Scene(
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     titre VARCHAR(50),
     budget INT,
     type VARCHAR(50),
@@ -83,7 +83,7 @@ CREATE TABLE Scene(
     CONSTRAINT fk_scene_oeuvre FOREIGN KEY (id_oeuvre) REFERENCES Oeuvre(id),
 );
 CREATE TABLE Artiste(
-    id INT PRIMARY KEY,
+    id INT IDENTITY(1,1) PRIMARY KEY,
     nom VARCHAR(50),
     prenom VARCHAR(50),
     date_naissance DATE,
