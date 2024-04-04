@@ -43,4 +43,4 @@ Il faut aussi lancer la définition de la procédure avec `DBManager.run_file()`
   -- [ ] Arranger le modèle entité-association et relationnel qu'on a remi à la mi-session si nécessaire
 
 ### Rapport :
-- [] Je m'en occupe, faites juste m'envoyer ce que vous avez fait pour que je puisse l'ajouter au rapport le plus tôt possible
+- [ ] Je m'en occupe, faites juste m'envoyer ce que vous avez fait pour que je puisse l'ajouter au rapport le plus tôt possible
