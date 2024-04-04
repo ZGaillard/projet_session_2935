@@ -110,9 +110,11 @@ class SearchableTable(ttk.Treeview):
             columns=self.column_names,
             show="headings"
         )
+
+        # determine the width of the columns based on the data
         for i, column_name in enumerate(self.column_names):
             mean_width = sum(
-                len(str(row[i+1])) for row in self.data # row[i+1] because we skip the id
+                len(str(row[i + 1])) for row in self.data
             ) // len(self.data)
             self.column(column_name, width=mean_width * 24,
                         minwidth=100, stretch=YES
@@ -130,8 +132,9 @@ class SearchableTable(ttk.Treeview):
         search_column = self.search_combobox.get()
         search_index = self.column_names.index(search_column)
         for row in self.data:
-            if search_text in str(row[search_index]).lower():
-                self.insert("", "end", values=row)
+            visible_row = row[1:]
+            if search_text in str(visible_row[search_index]).lower():
+                self.insert("", "end", values=visible_row)
 
     def reset(self):
         x = self.get_children()
