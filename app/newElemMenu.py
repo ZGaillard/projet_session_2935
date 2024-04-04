@@ -2,6 +2,7 @@ import ttkbootstrap as ttk
 from tkinter import Frame, Label, LEFT, SUNKEN, X, BOTH
 from ttkbootstrap.constants import *
 from DBManager import DBManager
+from ttkbootstrap.dialogs.dialogs import Messagebox
 
 from style import new_primary_button
 
@@ -104,9 +105,10 @@ class NewMovieMenu(Frame):
         self.create_form_entry("Origine", self.origine)
         self.create_form_entry("Langue", self.langue)
         self.create_form_entry("Genre", self.genre)
-        self.create_buttonbox()
-        self.producteur_treeview = ttk.Treeview(self, columns=("nom"), show="headings")
-        self.producteur_treeview.heading("#1", text="Nom")
+        self.producteur_treeview = ttk.Treeview(
+            self, columns=("Producteur"), show="headings"
+        )
+        self.producteur_treeview.heading("#1", text="Producteur")
         self.producteur_treeview.column("#1", width=200, stretch=True)
         self.producteur_treeview.pack(pady=20)
         self.populate_producteur_treeview()
@@ -114,6 +116,7 @@ class NewMovieMenu(Frame):
         back_button = new_primary_button(
             self, "Back", lambda: self.parent.switch_frame(NewElemMenu)
         )
+        self.create_buttonbox()
         back_button.pack(pady=20)
 
     def populate_producteur_treeview(self):
@@ -156,14 +159,28 @@ class NewMovieMenu(Frame):
             bootstyle=SUCCESS,
             width=6,
         )
-        sub_btn.pack(side=RIGHT, padx=5)
+        sub_btn.pack(padx=5)
         sub_btn.focus_set()
 
     def on_submit(self):
-        DBManager().run_procedure_with_args(
-            "AddMovies",
-            f"@id={600}, @titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @id_producteur={self.selected_producteur_id.get()}",
-        )
+        try:
+            DBManager().run_procedure_with_args(
+                "AddMovies",
+                f"@id={600}, @titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @id_producteur={self.selected_producteur_id.get()}",
+            )
+            Messagebox.ok("Movie added successfully", "Success")
+            self.clear_form()
+        except:
+            Messagebox.show_error("Enter valid datas please", "Error")
+
+    def clear_form(self):
+        self.titre.set("")
+        self.budget.set("")
+        self.date.set("")
+        self.duree.set(0)
+        self.origine.set("")
+        self.langue.set("")
+        self.genre.set("")
 
 
 class NewTheaterPlayMenu(Frame):
