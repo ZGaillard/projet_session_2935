@@ -103,25 +103,26 @@ class SearchableTable(ttk.Treeview):
 
         self.parent = parent
         self.data = data.get_tuples()
+
         self.column_names = data.get_column_names()
         ttk.Treeview.__init__(
             self, parent,
             columns=self.column_names,
             show="headings"
         )
-        # determine column width with respect to the data
         for i, column_name in enumerate(self.column_names):
             mean_width = sum(
-                len(str(row[i])) for row in self.data
+                len(str(row[i+1])) for row in self.data # row[i+1] because we skip the id
             ) // len(self.data)
             self.column(column_name, width=mean_width * 24,
                         minwidth=100, stretch=YES
                         )
-
             self.heading(column_name, text=column_name, anchor=W)
-        # insert data
+
+        # insert data (skip the first column which is the id)
         for row in self.data:
-            self.insert("", "end", values=row)
+            visible_row = row[1:]
+            self.insert("", "end", values=visible_row)
 
     def search(self):
         self.reset()
