@@ -3,6 +3,7 @@ from tkinter import Frame, Label, LEFT, SUNKEN, X, BOTH
 from ttkbootstrap.constants import *
 from DBManager import DBManager
 from ttkbootstrap.dialogs.dialogs import Messagebox
+import traceback
 
 from style import new_primary_button
 
@@ -191,20 +192,84 @@ class NewTheaterPlayMenu(Frame):
         self.initFrame()
 
     def initUI(self):
-        self.parent.title("New Theater Menu")
+        self.parent.title("New Play Menu")
         self.parent.geometry("1600x900")
 
         self.pack(fill=BOTH, expand=True)
 
     def initFrame(self):
-        title = Label(self, text="New Theater Menu")
+        title = Label(self, text="New Play Menu")
         title.config(font=("Arial", 40))
         title.pack(pady=60)
 
+        self.titre = ttk.StringVar(value="")
+        self.budget = ttk.IntVar(value="")
+        self.date = ttk.StringVar(value="")
+        self.duree = ttk.IntVar(value=0)
+        self.origine = ttk.StringVar(value="")
+        self.langue = ttk.StringVar(value="")
+        self.genre = ttk.StringVar(value="")
+        self.theatre = ttk.StringVar(value="")
+        # form entries
+        self.create_form_entry("Titre", self.titre)
+        self.create_form_entry("Budget", self.budget)
+        self.create_form_entry("Date de sortie", self.date)
+        self.create_form_entry("Durée", self.duree)
+        self.create_form_entry("Origine", self.origine)
+        self.create_form_entry("Langue", self.langue)
+        self.create_form_entry("Genre", self.genre)
+        self.create_form_entry("Theatre", self.theatre)
         back_button = new_primary_button(
             self, "Back", lambda: self.parent.switch_frame(NewElemMenu)
         )
+        self.create_buttonbox()
         back_button.pack(pady=20)
+
+    def create_form_entry(self, label, variable):
+        container = ttk.Frame(self)
+        container.pack(fill=X, expand=YES, pady=5)
+
+        lbl = ttk.Label(master=container, text=label.title(), width=10)
+        lbl.pack(side=LEFT, padx=5)
+
+        ent = ttk.Entry(master=container, textvariable=variable)
+        ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
+
+    def create_buttonbox(self):
+        container = ttk.Frame(self)
+        container.pack(fill=X, expand=YES, pady=(15, 10))
+
+        sub_btn = ttk.Button(
+            master=container,
+            text="Add",
+            command=self.on_submit,
+            bootstyle=SUCCESS,
+            width=6,
+        )
+        sub_btn.pack(padx=5)
+        sub_btn.focus_set()
+
+    def on_submit(self):
+        try:
+
+            DBManager().run_procedure_with_args(
+                "AddPlays",
+                f"@id={700}, @titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @theatre='{self.theatre.get()}'",
+            )
+            Messagebox.ok("Play added successfully", "Success")
+            self.clear_form()
+        except:
+            traceback.print_exc()
+            Messagebox.show_error("Enter valid datas please", "Error")
+
+    def clear_form(self):
+        self.titre.set("")
+        self.budget.set("")
+        self.date.set("")
+        self.duree.set(0)
+        self.origine.set("")
+        self.langue.set("")
+        self.genre.set("")
 
 
 class NewArtistMenu(Frame):

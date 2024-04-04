@@ -190,8 +190,11 @@ class SearchTheaterPlayMenu(Frame):
 
         from data import theater_plays
 
-        theater_plays_table = SearchableTable(self, theater_plays)
-        theater_plays_table.pack(pady=20)
+        self.theater_plays_table = SearchableTable(self, theater_plays)
+        self.theater_plays_table.pack(pady=20)
+
+        update_button = ttk.Button(self, text="Update", command=self.update_table)
+        update_button.pack(pady=20)
 
         separator = Frame(self, height=3, bd=0, relief=SUNKEN)
         separator.pack(fill=X, pady=10)
@@ -200,6 +203,15 @@ class SearchTheaterPlayMenu(Frame):
             self, "Back", lambda: self.parent.switch_frame(SearchMenu)
         )
         back_button.pack(pady=20)
+
+    def update_table(self):
+        import data
+
+        importlib.reload(data)
+
+        from data import theater_plays
+
+        self.theater_plays_table.update_data(theater_plays.get_tuples())
 
     def destroy(self):
         Frame.destroy(self)
