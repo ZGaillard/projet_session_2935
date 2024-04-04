@@ -1,4 +1,4 @@
-from app.DBManager import DBManager
+from DBManager import DBManager
 
 
 class Data:

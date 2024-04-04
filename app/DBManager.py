@@ -1,10 +1,10 @@
 import pymssql
 
 conn_params = {
-    'server'    : 'localhost',
-    'user'      : 'SA',
-    'password'  : 'Password123',
-    'database'  : 'CASTINGAPP',
+    'server': 'localhost',
+    'user': 'SA',
+    'password': 'Password123',
+    'database': 'CASTINGAPP',
     'autocommit': True
 }
 
@@ -48,6 +48,7 @@ class DBManager:
     def run_procedure_with_args(self, function_name, parameters):
         self.cursor.execute(f"EXEC {function_name} {parameters}")
         return self.cursor.fetchall()
+
     def __del__(self):
         self.cursor.close()
         self.conn.close()

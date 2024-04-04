@@ -2,7 +2,7 @@ from tkinter import *
 
 import ttkbootstrap as ttk
 
-from app.style import new_primary_button
+from style import new_primary_button
 
 
 class SearchMenu(ttk.Frame):
@@ -55,7 +55,7 @@ class SearchMenu(ttk.Frame):
         separator.pack(fill=X, pady=10)
 
         # button to go back to main menu
-        from app.mainMenu import MainMenu
+        from mainMenu import MainMenu
         back_button = new_primary_button(
             self, "Back",
             lambda: self.parent.switch_frame(MainMenu)
@@ -143,7 +143,7 @@ class SearchMovieMenu(Frame):
         title.config(font=("Arial", 20))
         title.pack(pady=40)
 
-        from app.data import movies
+        from data import movies
         movies_table = SearchableTable(self, movies)
         movies_table.pack(pady=20)
 
@@ -172,7 +172,7 @@ class SearchTheaterPlayMenu(Frame):
         title.config(font=("Arial", 20))
         title.pack(pady=40)
 
-        from app.data import theater_plays
+        from data import theater_plays
         theater_plays_table = SearchableTable(self, theater_plays)
         theater_plays_table.pack(pady=20)
 
@@ -200,7 +200,7 @@ class SearchArtistMenu(Frame):
         title.config(font=("Arial", 20))
         title.pack(pady=40)
 
-        from app.data import artists
+        from data import artists
         artists_table = SearchableTable(self, artists)
         artists_table.pack(pady=20)
 
@@ -228,7 +228,7 @@ class SearchCastingMenu(Frame):
         title.config(font=("Arial", 20))
         title.pack(pady=40)
 
-        from app.data import castings
+        from data import castings
         castings_table = SearchableTable(self, castings)
         castings_table.pack(pady=20)
 

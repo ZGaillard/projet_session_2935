@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE getMovies
+CREATE OR ALTER PROCEDURE getPlays
 AS
 BEGIN
     SELECT Oeuvre.titre, Oeuvre.budget, Oeuvre.date_sortie, Oeuvre.duree, Oeuvre.origine, Oeuvre.langue, Oeuvre.genre, Compagnie.nom AS nom_studio
