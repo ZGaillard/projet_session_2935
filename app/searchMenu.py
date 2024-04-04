@@ -219,7 +219,8 @@ class SearchArtistMenu(Frame):
 
         see_habit_sport_button = new_primary_button(
             self, "See Artist's Habits and Sports",
-            self.see_artist_habit_sport
+            self.see_artist_habit_sport,
+            width=32
         )
         see_habit_sport_button.pack(pady=20)
 
