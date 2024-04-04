@@ -40,8 +40,12 @@ theater_plays = Data(
 
 artists = Data(
     DBManager().run_procedure("getArtists"),
-    ["Nom", "Prénom", "Date de Naissance", "Salaire Min", "Domaine", "No Civique", "Rue", "Ville", "Code Postal", "Pays", "No Appartement"]
+    ["Nom", "Prénom", "Date de Naissance",
+     "Salaire Min", "Domaine", "No Civique",
+     "Rue", "Ville", "Code Postal", "Pays",
+     "No Appartement"]
 )
+
 
 castings = Data(
     DBManager().run_procedure("getCastings"),
