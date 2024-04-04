@@ -81,8 +81,10 @@ class SearchableTable(ttk.Treeview):
         )
         search_bar.pack(side=LEFT, padx=10)
 
+        self.search_combobox_value = StringVar()
         self.search_combobox = ttk.Combobox(
             search_bar_container,
+            textvariable=self.search_combobox_value,
             values=data.get_column_names(),
             state='readonly', width=10
         )
@@ -91,7 +93,12 @@ class SearchableTable(ttk.Treeview):
 
         self.search_text.trace(
             "w",
-            lambda *args: self.search(self.search_combobox)
+            lambda *args: self.search()
+        )
+
+        self.search_combobox.bind(
+            "<<ComboboxSelected>>",
+            lambda *args: self.search()
         )
 
         self.parent = parent
@@ -116,10 +123,10 @@ class SearchableTable(ttk.Treeview):
         for row in self.data:
             self.insert("", "end", values=row)
 
-    def search(self, search_combobox):
+    def search(self):
         self.reset()
         search_text = self.search_text.get().lower()
-        search_column = search_combobox.get()
+        search_column = self.search_combobox.get()
         search_index = self.column_names.index(search_column)
         for row in self.data:
             if search_text in str(row[search_index]).lower():
