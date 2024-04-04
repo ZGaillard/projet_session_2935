@@ -1,11 +1,35 @@
 import tkinter as tk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
 import mainMenu
+from app.DBManager import DBManager
+
 
 
 class MainApplication(tk.Tk):
     def __init__(self):
+        # Database
+        self.db_manager = DBManager()
+        # This needs to be run first
+        self.db_manager.run_file("database/CreateUpdated.sql")
+
+        # This two procedure definition needs to be run before Populate.sql
+        self.db_manager.run_file("database/GenArtisteHabit.sql")
+        self.db_manager.run_file("database/GenArtisteSport.sql")
+
+        self.db_manager.run_file("database/Populate.sql")
+
+        self.db_manager.run_file("database/DefGetArtists.sql")
+        self.db_manager.run_file("database/DefGetMovies.sql")
+        self.db_manager.run_file("database/DefGetPlays.sql")
+        self.db_manager.run_file("database/DefGetCastings.sql")
+
+        # UI
         tk.Tk.__init__(self)
+
+        style = ttk.Style()
+
         self.title("Casting Manager")
         self.geometry("1600x900")
         self.frame = None
@@ -17,7 +41,6 @@ class MainApplication(tk.Tk):
         new_frame = frame(self)
         self.frame = new_frame
         self.frame.pack(fill=tk.BOTH, expand=True)
-
 
 
 if __name__ == "__main__":
