@@ -11,10 +11,10 @@ class MainApplication(tk.Tk):
     def __init__(self):
         # Database
         self.db_manager = DBManager()
-        self.db_manager.execute_file("database/CreateUpdated.sql")
-        self.db_manager.execute_file("database/GenArtisteHabit.sql")
-        self.db_manager.execute_file("database/GenArtisteSport.sql")
-        self.db_manager.execute_file("database/Populate.sql")
+        self.db_manager.run_file("database/CreateUpdated.sql")
+        self.db_manager.run_file("database/GenArtisteHabit.sql")
+        self.db_manager.run_file("database/GenArtisteSport.sql")
+        self.db_manager.run_file("database/Populate.sql")
 
         # IMPORTANT
         # Queries will need to be separated into different files

@@ -25,25 +25,25 @@ class Data:
 
 # Data objects
 movies = Data(
-    DBManager().run_function("getMovies"),
+    DBManager().run_procedure("getMovies"),
     ["Titre", "Budget", "Date de Sortie", "Durée", "Origine", "Langue",
      "Genre", "Nom du Studio"]
 )
 
 
 theater_plays = Data(
-    DBManager().run_function("getPlays"),
+    DBManager().run_procedure("getPlays"),
     ["Titre", "Budget", "Date de Sortie", "Durée", "Origine", "Langue",
      "Genre", "Nom du théâtre"]
 )
 
 
 artists = Data(
-    DBManager().run_function("getArtists"),
+    DBManager().run_procedure("getArtists"),
     ["Nom", "Prénom", "Date de Naissance", "Salaire Min", "Domaine", "No Civique", "Rue", "Ville", "Code Postal", "Pays", "No Appartement"]
 )
 
 castings = Data(
-    DBManager().run_function("getCastings"),
+    DBManager().run_procedure("getCastings"),
     ["Titre de l'Oeuvre", "Objectif", "Thème"]
 )
