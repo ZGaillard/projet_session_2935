@@ -165,7 +165,7 @@ class NewMovieMenu(Frame):
         try:
             DBManager().run_procedure_with_args(
                 "AddMovies",
-                f"@id={600}, @titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @id_producteur={self.selected_producteur_id.get()}",
+                f"@titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @id_producteur={self.selected_producteur_id.get()}",
             )
             Messagebox.ok("Movie added successfully", "Success")
             self.clear_form()
@@ -252,7 +252,7 @@ class NewTheaterPlayMenu(Frame):
 
             DBManager().run_procedure_with_args(
                 "AddPlays",
-                f"@id={700}, @titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @theatre='{self.theatre.get()}'",
+                f"@titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @theatre='{self.theatre.get()}'",
             )
             Messagebox.ok("Play added successfully", "Success")
             self.clear_form()
@@ -343,14 +343,9 @@ class NewArtistMenu(Frame):
 
     def on_submit(self):
         try:
-
-            DBManager().run_procedure_with_args(
-                "AddAdresse",
-                f"@id={700}, @no_civique={self.no_civique.get()}, @rue='{self.rue.get()}', @ville='{self.ville.get()}', @code_postal='{self.code_postal.get()}', @pays='{self.pays.get()}', @no_appartement={self.no_appartement.get()}",
-            )
             DBManager().run_procedure_with_args(
                 "AddArtist",
-                f"@id={900}, @nom='{self.nom.get()}', @prenom='{self.prenom.get()}', @date_naissance='{self.date_naissance.get()}', @salaire_min={self.salaire_min.get()},@domaine='{self.domaine.get()}',@id_adresse={700}",
+                f"@nom='{self.nom.get()}', @prenom='{self.prenom.get()}', @date_naissance='{self.date_naissance.get()}', @salaire_min={self.salaire_min.get()},@domaine='{self.domaine.get()}', @no_civique={self.no_civique.get()}, @rue='{self.rue.get()}', @ville='{self.ville.get()}', @code_postal='{self.code_postal.get()}', @pays='{self.pays.get()}', @no_appartement={self.no_appartement.get()}",
             )
             Messagebox.ok("Artist added successfully", "Success")
             self.clear_form()
