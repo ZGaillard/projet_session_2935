@@ -1,7 +1,9 @@
+from datetime import datetime
 from tkinter import *
 
 import ttkbootstrap as ttk
 
+from DBManager import DBManager
 from style import new_primary_button
 
 import importlib
@@ -83,8 +85,10 @@ class SearchableTable(ttk.Treeview):
         search_bar = ttk.Entry(search_bar_container, textvariable=self.search_text)
         search_bar.pack(side=LEFT, padx=10)
 
+        self.search_combobox_value = StringVar()
         self.search_combobox = ttk.Combobox(
             search_bar_container,
+            textvariable=self.search_combobox_value,
             values=data.get_column_names(),
             state="readonly",
             width=10,
@@ -93,9 +97,13 @@ class SearchableTable(ttk.Treeview):
         self.search_combobox.pack(side=LEFT, padx=10)
 
         self.search_text.trace("w", lambda *args: self.search(self.search_combobox))
+        self.search_text.trace("w", lambda *args: self.search())
+
+        self.search_combobox.bind("<<ComboboxSelected>>", lambda *args: self.search())
 
         self.parent = parent
         self.data = data.get_tuples()
+
         self.column_names = data.get_column_names()
         ttk.Treeview.__init__(self, parent, columns=self.column_names, show="headings")
         # determine column width with respect to the data
@@ -104,18 +112,21 @@ class SearchableTable(ttk.Treeview):
             self.column(column_name, width=mean_width * 24, minwidth=100, stretch=YES)
 
             self.heading(column_name, text=column_name, anchor=W)
-        # insert data
-        for row in self.data:
-            self.insert("", "end", values=row)
 
-    def search(self, search_combobox):
+        # insert data (skip the first column which is the id)
+        for row in self.data:
+            visible_row = row[1:]
+            self.insert("", "end", values=visible_row)
+
+    def search(self):
         self.reset()
         search_text = self.search_text.get().lower()
-        search_column = search_combobox.get()
+        search_column = self.search_combobox.get()
         search_index = self.column_names.index(search_column)
         for row in self.data:
-            if search_text in str(row[search_index]).lower():
-                self.insert("", "end", values=row)
+            visible_row = row[1:]
+            if search_text in str(visible_row[search_index]).lower():
+                self.insert("", "end", values=visible_row)
 
     def reset(self):
         x = self.get_children()
@@ -126,7 +137,8 @@ class SearchableTable(ttk.Treeview):
         self.reset()
         self.data = new_data
         for row in self.data:
-            self.insert("", "end", values=row)
+            visible_row = row[1:]
+            self.insert("", "end", values=visible_row)
 
 
 class SearchMovieMenu(Frame):
@@ -239,6 +251,14 @@ class SearchArtistMenu(Frame):
         update_button = ttk.Button(self, text="Update", command=self.update_table)
         update_button.pack(pady=20)
 
+        see_habit_sport_button = new_primary_button(
+            self,
+            "See Artist's Habits and Sports",
+            self.see_artist_habit_sport,
+            width=32,
+        )
+        see_habit_sport_button.pack(pady=20)
+
         separator = Frame(self, height=3, bd=0, relief=SUNKEN)
         separator.pack(fill=X, pady=10)
 
@@ -256,8 +276,90 @@ class SearchArtistMenu(Frame):
 
         self.artists_table.update_data(artists.get_tuples())
 
+    def see_artist_habit_sport(self):
+        selected_artist_id = self.artists_table.selection()
+        if not selected_artist_id:
+            return  # no artist selected
+
+        # format the data to be able to compare it
+        selected_artist = self.artists_table.item(selected_artist_id[0])["values"]
+        selected_artist[2] = selected_artist[2].split("-")
+        selected_artist[2] = "-".join(selected_artist[2][::-1])
+        selected_artist[2] = datetime.strptime(selected_artist[2], "%d-%m-%Y").date()
+        selected_artist[8] = str(selected_artist[8])
+        if selected_artist[-1] == "None":
+            selected_artist[-1] = None
+        selected_artist = tuple(selected_artist)
+
+        # we got rid of the first column which is the id
+        # we need to retrieve it from the data
+        artist_id = None
+        for row in self.artists_table.data:
+            if row[1:] == selected_artist:
+                artist_id = row[0]
+                break
+        if artist_id is None:
+            return
+        self.parent.switch_frame(ArtistHabitSportMenu, artist_id)
+
     def destroy(self):
         Frame.destroy(self)
+
+
+class ArtistHabitSportMenu(Frame):
+    def __init__(self, parent, artist_id):
+        habits = DBManager().run_procedure_with_args("getArtistHabits", artist_id)
+        sports = DBManager().run_procedure_with_args("getArtistSports", artist_id)
+
+        artist_name = DBManager().read_where(
+            "Artiste", "prenom, nom", f"id={artist_id}"
+        )
+
+        Frame.__init__(self, parent)
+        self.parent = parent
+        self.parent.title(
+            f"{artist_name[0][0]} {artist_name[0][1]}'s Habits and Sports"
+        )
+        self.pack(fill=BOTH, expand=True)
+
+        title = ttk.Label(
+            self,
+            text=f"{artist_name[0][0]} {artist_name[0][1]}'s Habits and Sports",
+        )
+        title.config(font=("Arial", 20))
+        title.pack(pady=40)
+
+        details_container = Frame(self)
+        details_container.pack(pady=20)
+
+        habits_container = Frame(details_container)
+        habits_container.pack(side=LEFT, padx=10)
+
+        habits_label = ttk.Label(habits_container, text="Habits")
+        habits_label.pack(pady=10)
+
+        habits_listbox = Listbox(habits_container)
+        habits_listbox.pack(pady=10)
+
+        for habit in habits:
+            habits_listbox.insert(END, habit[2])
+
+        sports_container = Frame(details_container)
+        sports_container.pack(side=LEFT, padx=10)
+
+        sports_label = ttk.Label(sports_container, text="Sports")
+        sports_label.pack(pady=10)
+
+        sports_listbox = Listbox(sports_container)
+        sports_listbox.pack(pady=10)
+
+        for sport in sports:
+            sports_listbox.insert(END, sport[2])
+
+        back_button = new_primary_button(
+            self, "Back", lambda: self.parent.switch_frame(SearchArtistMenu)
+        )
+        back_button.pack(pady=20)
 
 
 class SearchCastingMenu(Frame):

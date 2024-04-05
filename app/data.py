@@ -71,6 +71,7 @@ artists = Data(
     ],
 )
 
+
 castings = Data(
     DBManager().run_procedure("getCastings"), ["Titre de l'Oeuvre", "Objectif", "Thème"]
 )

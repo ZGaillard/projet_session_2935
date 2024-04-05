@@ -36,10 +36,10 @@ Il faut aussi lancer la définition de la procédure avec `DBManager.run_file()`
 - [ ] Normaliser la base de données
    - [ ] Faire la liste des dépendances fonctionnelles pour chaque table
    - [ ] Expliquer pourquoi chaque table est en 1NF, 2NF, 3NF (Si ce n'est pas le cas, la normaliser en 3NF) et m'avertir pour le modifier dans le code
-   - [ ] Créer un fichier SQL pour 10 requêtes complexes
-   - [ ] Améliorer la création des tables (ajouter des contraintes, des triggers, etc.)
-   - [ ] Créer des procédures, fonctions, triggers, curseurs, views, etc. (Le but est de montrer à la prof qu'on sait utiliser ces outils)
-   - [ ] Arranger le modèle entité-association et relationnel qu'on a remi à la mi-session si nécessaire
+- [ ] Créer un fichier SQL pour 10 requêtes complexes
+- [ ] Améliorer la création des tables (ajouter des contraintes, des triggers, etc.)
+- [ ] Créer des procédures, fonctions, triggers, curseurs, views, etc. (Le but est de montrer à la prof qu'on sait utiliser ces outils)
+- [ ] Arranger le modèle entité-association et relationnel qu'on a remi à la mi-session si nécessaire
 
 ### Rapport :
 - [ ] Je m'en occupe, faites juste m'envoyer ce que vous avez fait pour que je puisse l'ajouter au rapport le plus tôt possible
