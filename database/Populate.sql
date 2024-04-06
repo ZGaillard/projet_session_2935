@@ -1383,5 +1383,5 @@ EXEC GenerateArtisteSportTuples @tupleCount = 500;
 
 EXEC GenerateArtisteHabitudeTuples @tupleCount = 500;
 
-EXEC GenerateCastingArtistesTuples @tupleCount = 500;
+EXEC GenerateCastingArtistesTuples @tupleCount = 2000;
 

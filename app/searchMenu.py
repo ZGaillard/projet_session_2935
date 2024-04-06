@@ -287,9 +287,13 @@ class ArtistHabitSportMenu(Frame):
         habits = DBManager().run_procedure_with_args(
             "getArtistHabits", artist_id
         )
+        if habits is None:
+            habits = []
         sports = DBManager().run_procedure_with_args(
             "getArtistSports", artist_id
         )
+        if sports is None:
+            sports = []
 
         artist_name = DBManager().read_where(
             "Artiste",

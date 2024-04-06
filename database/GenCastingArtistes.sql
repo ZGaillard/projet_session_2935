@@ -28,9 +28,9 @@ BEGIN
     BEGIN
         DECLARE @id_artiste INT = (SELECT CAST(RAND() * 98 + 1 AS INT));
         DECLARE @id_oeuvre INT = (SELECT CAST(RAND() * 98 + 1 AS INT));
-        DECLARE @id_fonction INT = (SELECT CAST(RAND() * 24 AS INT));
+        DECLARE @id_fonction INT = (SELECT CAST(RAND() * 23 + 1 AS INT));
 
-        IF NOT EXISTS (SELECT * FROM Casting_Artiste WHERE id_artiste = @id_artiste AND id_oeuvre = @id_oeuvre) AND EXISTS (SELECT * FROM Oeuvre WHERE id = @id_oeuvre)
+        IF NOT EXISTS (SELECT * FROM Casting_Artiste WHERE id_artiste = @id_artiste AND id_oeuvre = @id_oeuvre)
         BEGIN
             INSERT INTO Casting_Artiste
             VALUES (

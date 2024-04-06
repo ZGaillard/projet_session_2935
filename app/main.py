@@ -16,6 +16,7 @@ class MainApplication(tk.Tk):
         # This two procedure definition needs to be run before Populate.sql
         self.db_manager.run_file("../database/GenArtisteHabit.sql")
         self.db_manager.run_file("../database/GenArtisteSport.sql")
+        self.db_manager.run_file("../database/GenCastingArtistes.sql")
 
         self.db_manager.run_file("../database/Populate.sql")
 
@@ -23,11 +24,17 @@ class MainApplication(tk.Tk):
         self.db_manager.run_file("../database/DefGetMovies.sql")
         self.db_manager.run_file("../database/DefGetPlays.sql")
         self.db_manager.run_file("../database/DefGetCastings.sql")
-        self.db_manager.run_file("../database/DefAddMovies.sql")
+        self.db_manager.run_file("../database/DefGetCastingArtists.sql")
+        self.db_manager.run_file("../database/DefGetArtistHabit.sql")
+        self.db_manager.run_file("../database/DefGetArtistSports.sql")
+        self.db_manager.run_file("../database/DefGetArtistRelations.sql")
+
+
+        #self.db_manager.run_file("../database/DefAddMovies.sql")
         self.db_manager.run_file("../database/DefGetCompagnies.sql")
-        self.db_manager.run_file("../database/DefAddPlays.sql")
-        self.db_manager.run_file("../database/DefAddArtist.sql")
-        self.db_manager.run_file("../database/DefAddAdresse.sql")
+        #self.db_manager.run_file("../database/DefAddPlays.sql")
+        #self.db_manager.run_file("../database/DefAddArtist.sql")
+        #self.db_manager.run_file("../database/DefAddAdresse.sql")
 
         # UI
         tk.Tk.__init__(self)
@@ -39,10 +46,10 @@ class MainApplication(tk.Tk):
         self.frame = None
         self.switch_frame(mainMenu.MainMenu)
 
-    def switch_frame(self, frame):
+    def switch_frame(self, frame, *args):
         if self.frame is not None:
             self.frame.destroy()
-        new_frame = frame(self)
+        new_frame = frame(self, *args)
         self.frame = new_frame
         self.frame.pack(fill=tk.BOTH, expand=True)
 
