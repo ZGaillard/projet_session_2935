@@ -29,6 +29,7 @@ class MainApplication(tk.Tk):
         self.db_manager.run_file("../database/DefAddArtist.sql")
         self.db_manager.run_file("../database/DefGetArtistHabit.sql")
         self.db_manager.run_file("../database/DefGetArtistSports.sql")
+        self.db_manager.run_file("../database/AddArtistToCasting.sql")
 
         # UI
         tk.Tk.__init__(self)
