@@ -1,7 +1,9 @@
+from datetime import datetime
 from tkinter import *
 
 import ttkbootstrap as ttk
 
+from app.DBManager import DBManager
 from style import new_primary_button
 
 
@@ -212,20 +214,186 @@ class SearchArtistMenu(Frame):
         title.pack(pady=40)
 
         from data import artists
-        artists_table = SearchableTable(self, artists)
-        artists_table.pack(pady=20)
+        self.artists_table = SearchableTable(self, artists)
+        self.artists_table.pack(pady=20)
 
-        separator = Frame(self, height=3, bd=0, relief=SUNKEN)
-        separator.pack(fill=X, pady=10)
+        see_habit_sport_button = new_primary_button(
+            self, "See Artist's Habits and Sports",
+            self.see_artist_habit_sport,
+            width=32
+        )
+        see_habit_sport_button.pack(pady=10)
+
+        see_relations_button = new_primary_button(
+            self, "See Artist's Relations",
+            self.see_artist_relations,
+            width=32
+        )
+        see_relations_button.pack(pady=10)
 
         back_button = new_primary_button(
             self, "Back",
             lambda: self.parent.switch_frame(SearchMenu)
         )
-        back_button.pack(pady=20)
+        back_button.pack(pady=40)
+
+    def see_artist_relations(self):
+        selected_artist_id = self.get_selected_artist_id()
+        if selected_artist_id is None:
+            return
+        self.parent.switch_frame(ArtistRelationMenu, selected_artist_id)
+
+    def see_artist_habit_sport(self):
+        selected_artist_id = self.get_selected_artist_id()
+        if selected_artist_id is None:
+            return
+        self.parent.switch_frame(ArtistHabitSportMenu, selected_artist_id)
 
     def destroy(self):
         Frame.destroy(self)
+
+    def get_selected_artist_id(self):
+        selected_artist_id = self.artists_table.selection()
+        if not selected_artist_id:
+            return None
+
+        # format the data to be able to compare it
+        selected_artist = self.artists_table.item(selected_artist_id[0])[
+            'values']
+        selected_artist[2] = selected_artist[2].split('-')
+        selected_artist[2] = "-".join(selected_artist[2][::-1])
+        selected_artist[2] = datetime.strptime(selected_artist[2],
+                                               "%d-%m-%Y").date()
+        selected_artist[8] = str(selected_artist[8])
+        if selected_artist[-1] == 'None':
+            selected_artist[-1] = None
+        selected_artist = tuple(selected_artist)
+
+        # we got rid of the first column which is the id
+        # we need to retrieve it from the data
+        artist_id = None
+        for row in self.artists_table.data:
+            if row[1:] == selected_artist:
+                artist_id = row[0]
+                break
+        if artist_id is None:
+            return None
+
+        return artist_id
+
+
+class ArtistHabitSportMenu(Frame):
+    def __init__(self, parent, artist_id):
+        habits = DBManager().run_procedure_with_args(
+            "getArtistHabits", artist_id
+        )
+        sports = DBManager().run_procedure_with_args(
+            "getArtistSports", artist_id
+        )
+
+        artist_name = DBManager().read_where(
+            "Artiste",
+            "prenom, nom",
+            f"id={artist_id}"
+        )
+
+        Frame.__init__(self, parent)
+        self.parent = parent
+        self.parent.title(
+            f"{artist_name[0][0]} {artist_name[0][1]}'s Habits and Sports")
+        self.pack(fill=BOTH, expand=True)
+
+        title = ttk.Label(self,
+                          text=f"{artist_name[0][0]} {artist_name[0][1]}'s Habits and Sports", )
+        title.config(font=("Arial", 20))
+        title.pack(pady=40)
+
+        details_container = Frame(self)
+        details_container.pack(pady=20)
+
+        habits_container = Frame(details_container)
+        habits_container.pack(side=LEFT, padx=10)
+
+        habits_label = ttk.Label(habits_container, text="Habits")
+        habits_label.pack(pady=10)
+
+        habits_listbox = Listbox(habits_container)
+        habits_listbox.pack(pady=10)
+
+        for habit in habits:
+            habits_listbox.insert(END, habit[2])
+
+        sports_container = Frame(details_container)
+        sports_container.pack(side=LEFT, padx=10)
+
+        sports_label = ttk.Label(sports_container, text="Sports")
+        sports_label.pack(pady=10)
+
+        sports_listbox = Listbox(sports_container)
+        sports_listbox.pack(pady=10)
+
+        for sport in sports:
+            sports_listbox.insert(END, sport[2])
+
+        back_button = new_primary_button(
+            self, "Back",
+            lambda: self.parent.switch_frame(SearchArtistMenu)
+        )
+        back_button.pack(pady=20)
+
+
+class ArtistRelationMenu(Frame):
+    def __init__(self, parent, artist_id):
+        relations = DBManager().run_procedure_with_args(
+            "getArtistRelations", artist_id
+        )
+
+        artist_name = DBManager().read_where(
+            "Artiste",
+            "prenom, nom",
+            f"id={artist_id}"
+        )
+
+        Frame.__init__(self, parent)
+        self.parent = parent
+        self.parent.title(
+            f"{artist_name[0][0]} {artist_name[0][1]}'s Relations")
+        self.pack(fill=BOTH, expand=True)
+
+        title = ttk.Label(
+            self,
+            text=f"{artist_name[0][0]} {artist_name[0][1]}'s Relations"
+        )
+        title.config(font=("Arial", 20))
+        title.pack(pady=40)
+
+        details_container = Frame(self)
+        details_container.pack(pady=20)
+
+        relations_label = ttk.Label(details_container, text="Relations")
+        relations_label.pack(pady=10)
+
+        relations_treeview = ttk.Treeview(details_container,
+                                          columns=("Artist", "Relation"))
+        relations_treeview.heading("Artist", text="Artist")
+        relations_treeview.heading("Relation", text="Relation")
+        relations_treeview.column("#0", width=0, stretch=NO)
+        relations_treeview.column("Artist", width=400)
+        relations_treeview.column("Relation", width=400)
+        relations_treeview.config(height=10)
+        relations_treeview.pack(pady=10)
+
+        for relation in relations:
+            full_name = str(relation[0]) + " " + str(relation[1])
+            relations_treeview.insert("", "end",
+                                      values=(full_name, relation[2])
+                                      )
+
+        back_button = new_primary_button(
+            self, "Back",
+            lambda: self.parent.switch_frame(SearchArtistMenu)
+        )
+        back_button.pack(pady=20)
 
 
 class SearchCastingMenu(Frame):
@@ -240,11 +408,15 @@ class SearchCastingMenu(Frame):
         title.pack(pady=40)
 
         from data import castings
-        castings_table = SearchableTable(self, castings)
-        castings_table.pack(pady=20)
+        self.castings_table = SearchableTable(self, castings)
+        self.castings_table.pack(pady=20)
 
-        separator = Frame(self, height=3, bd=0, relief=SUNKEN)
-        separator.pack(fill=X, pady=10)
+        see_artist_button = new_primary_button(
+            self, "See the artists participating in the casting",
+            self.see_artist_castings,
+            width=38
+        )
+        see_artist_button.pack(pady=10)
 
         back_button = new_primary_button(
             self, "Back",
@@ -254,3 +426,76 @@ class SearchCastingMenu(Frame):
 
     def destroy(self):
         Frame.destroy(self)
+
+    def see_artist_castings(self):
+        selected_casting_id = self.get_selected_casting_id()
+        if selected_casting_id is None:
+            return
+        self.parent.switch_frame(ArtistCastingMenu, selected_casting_id)
+
+    def get_selected_casting_id(self):
+        selected_casting_id = self.castings_table.selection()
+        if not selected_casting_id:
+            return None
+        selected_casting = self.castings_table.item(selected_casting_id[0])['values']
+        selected_casting = tuple(selected_casting)
+        casting_id = None
+        from data import castings
+        for row in castings.get_tuples():
+            if row[1:] == selected_casting:
+                casting_id = row[0]
+                break
+
+        return casting_id
+
+class ArtistCastingMenu(Frame):
+
+    def __init__(self, parent, casting_id):
+        artists = DBManager().run_procedure_with_args(
+            "getCastingArtists", casting_id
+        )
+
+        casting_name = DBManager().read_where(
+            "Oeuvre",
+            "titre",
+            f"id={casting_id}"
+        )
+
+        Frame.__init__(self, parent)
+        self.parent = parent
+        self.parent.title(
+            f"{casting_name[0][0]}'s Artists")
+        self.pack(fill=BOTH, expand=True)
+
+        title = ttk.Label(self,
+                          text=f"{casting_name[0][0]}'s Artists", )
+        title.config(font=("Arial", 20))
+        title.pack(pady=40)
+
+        details_container = Frame(self)
+        details_container.pack(pady=20)
+
+        artists_label = ttk.Label(details_container, text="Artists")
+        artists_label.pack(pady=10)
+
+        artists_treeview = ttk.Treeview(details_container,
+                                          columns=("Artist", "Role"))
+        artists_treeview.heading("Artist", text="Artist")
+        artists_treeview.heading("Role", text="Role")
+        artists_treeview.column("#0", width=0, stretch=NO)
+        artists_treeview.column("Artist", width=400)
+        artists_treeview.column("Role", width=400)
+        artists_treeview.config(height=10)
+        artists_treeview.pack(pady=10)
+
+        for artist in artists:
+            full_name = str(artist[0]) + " " + str(artist[1])
+            artists_treeview.insert("", "end",
+                                      values=(full_name, artist[2])
+                                      )
+
+        back_button = new_primary_button(
+            self, "Back",
+            lambda: self.parent.switch_frame(SearchCastingMenu)
+        )
+        back_button.pack(pady=20)

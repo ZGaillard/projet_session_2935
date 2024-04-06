@@ -4,13 +4,13 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 
 
-def new_primary_button(container, text, command):
+def new_primary_button(container, text, command, width=18):
     button = ttk.Button(
         container,
         text=text,
         command=command,
         style="primary.TButton",
-        width=18
+        width=width
     )
     return button
 
