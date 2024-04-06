@@ -1379,8 +1379,9 @@ VALUES
 
 
 
-EXEC GenerateArtisteSportTuples @tupleCount = 100;
+EXEC GenerateArtisteSportTuples @tupleCount = 500;
 
-EXEC GenerateArtisteHabitudeTuples @tupleCount = 100;
+EXEC GenerateArtisteHabitudeTuples @tupleCount = 500;
 
+EXEC GenerateCastingArtistesTuples @tupleCount = 500;
 
