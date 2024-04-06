@@ -1,6 +1,6 @@
 import tkinter as tk
+
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
 
 import mainMenu
 from DBManager import DBManager
@@ -16,6 +16,7 @@ class MainApplication(tk.Tk):
         # This two procedure definition needs to be run before Populate.sql
         self.db_manager.run_file("../database/GenArtisteHabit.sql")
         self.db_manager.run_file("../database/GenArtisteSport.sql")
+        self.db_manager.run_file("../database/GenCastingArtistes.sql")
 
         self.db_manager.run_file("../database/Populate.sql")
 
@@ -25,6 +26,8 @@ class MainApplication(tk.Tk):
         self.db_manager.run_file("../database/DefGetCastings.sql")
         self.db_manager.run_file("../database/DefGetArtistHabit.sql")
         self.db_manager.run_file("../database/DefGetArtistSports.sql")
+        self.db_manager.run_file("../database/DefGetArtistRelations.sql")
+        self.db_manager.run_file("../database/DefGetCastingArtists.sql")
 
         # UI
         tk.Tk.__init__(self)
