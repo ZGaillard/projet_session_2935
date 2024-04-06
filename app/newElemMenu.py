@@ -8,23 +8,60 @@ import traceback
 from style import new_primary_button
 
 
-class NewElemMenu(Frame):
-
-    def __init__(self, parent):
+class BaseMenu(Frame):
+    def __init__(self, parent, title):
         Frame.__init__(self, parent)
         self.parent = parent
+        self.title = title
         self.initUI()
         self.initFrame()
 
     def initUI(self):
-        self.parent.title("New Element Menu")
+        self.parent.title(self.title)
+        self.parent.geometry("1600x900")
         self.pack(fill=BOTH, expand=True)
 
     def initFrame(self):
-        # title
-        title = Label(self, text="New Element Menu")
+        title = Label(self, text=self.title)
         title.config(font=("Arial", 40))
         title.pack(pady=60)
+
+    def create_form_entry(self, label, variable):
+        container = ttk.Frame(self)
+        container.pack(pady=5, fill=X)
+
+        inner_frame = ttk.Frame(container)
+        inner_frame.grid(row=0, column=0, padx=(20, 0))
+
+        lbl = ttk.Label(master=inner_frame, text=label.title(), width=25, anchor="e")
+        lbl.grid(row=0, column=0, padx=(0, 5))
+
+        ent = ttk.Entry(master=inner_frame, textvariable=variable, width=30)
+        ent.grid(row=0, column=1, padx=(5, 0))
+
+        container.columnconfigure(0, weight=1)
+
+    def create_buttonbox(self):
+        container = ttk.Frame(self)
+        container.pack(fill=X, expand=YES, pady=(15, 10))
+
+        sub_btn = ttk.Button(
+            master=container,
+            text="Add",
+            command=self.on_submit,
+            bootstyle=SUCCESS,
+            width=6,
+        )
+        sub_btn.pack(padx=5)
+        sub_btn.focus_set()
+
+    def clear_form(self):
+        pass
+
+
+class NewElemMenu(BaseMenu):
+    def __init__(self, parent):
+        super().__init__(parent, "New Element Menu")
 
         # button for each new element
         button_container_1 = Frame(self)
@@ -71,23 +108,9 @@ class NewElemMenu(Frame):
         back_button.pack(pady=20)
 
 
-class NewMovieMenu(Frame):
+class NewMovieMenu(BaseMenu):
     def __init__(self, parent):
-        Frame.__init__(self, parent)
-        self.parent = parent
-        self.initUI()
-        self.initFrame()
-
-    def initUI(self):
-        self.parent.title("New Movie Menu")
-        self.parent.geometry("1600x900")
-
-        self.pack(fill=BOTH, expand=True)
-
-    def initFrame(self):
-        title = Label(self, text="New Movie Menu")
-        title.config(font=("Arial", 40))
-        title.pack(pady=60)
+        super().__init__(parent, "New Movie Menu")
 
         self.titre = ttk.StringVar(value="")
         self.budget = ttk.IntVar(value="")
@@ -96,6 +119,9 @@ class NewMovieMenu(Frame):
         self.origine = ttk.StringVar(value="")
         self.langue = ttk.StringVar(value="")
         self.genre = ttk.StringVar(value="")
+        self.objectif = ttk.StringVar(value="")
+        self.theme = ttk.StringVar(value="")
+
         # form entries
         self.create_form_entry("Titre", self.titre)
         self.create_form_entry("Budget", self.budget)
@@ -104,6 +130,9 @@ class NewMovieMenu(Frame):
         self.create_form_entry("Origine", self.origine)
         self.create_form_entry("Langue", self.langue)
         self.create_form_entry("Genre", self.genre)
+        self.create_form_entry("Objectif", self.objectif)
+        self.create_form_entry("Theme", self.theme)
+
         self.producteur_treeview = ttk.Treeview(
             self, columns=("Producteur"), show="headings"
         )
@@ -111,6 +140,7 @@ class NewMovieMenu(Frame):
         self.producteur_treeview.column("#1", width=200, stretch=True)
         self.producteur_treeview.pack(pady=20)
         self.populate_producteur_treeview()
+
         self.selected_producteur_id = ttk.IntVar()
         back_button = new_primary_button(
             self, "Back", lambda: self.parent.switch_frame(NewElemMenu)
@@ -137,35 +167,11 @@ class NewMovieMenu(Frame):
 
         self.producteur_treeview.bind("<<TreeviewSelect>>", on_treeview_select)
 
-    def create_form_entry(self, label, variable):
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=5)
-
-        lbl = ttk.Label(master=container, text=label.title(), width=10)
-        lbl.pack(side=LEFT, padx=5)
-
-        ent = ttk.Entry(master=container, textvariable=variable)
-        ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
-
-    def create_buttonbox(self):
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=(15, 10))
-
-        sub_btn = ttk.Button(
-            master=container,
-            text="Add",
-            command=self.on_submit,
-            bootstyle=SUCCESS,
-            width=6,
-        )
-        sub_btn.pack(padx=5)
-        sub_btn.focus_set()
-
     def on_submit(self):
         try:
             DBManager().run_procedure_with_args(
                 "AddMovies",
-                f"@titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @id_producteur={self.selected_producteur_id.get()}",
+                f"@titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}',@objectif='{self.objectif.get()}', @theme='{self.theme.get()}', @id_producteur={self.selected_producteur_id.get()}",
             )
             Messagebox.ok("Movie added successfully", "Success")
             self.clear_form()
@@ -182,23 +188,9 @@ class NewMovieMenu(Frame):
         self.genre.set("")
 
 
-class NewTheaterPlayMenu(Frame):
+class NewTheaterPlayMenu(BaseMenu):
     def __init__(self, parent):
-        Frame.__init__(self, parent)
-        self.parent = parent
-        self.initUI()
-        self.initFrame()
-
-    def initUI(self):
-        self.parent.title("New Play Menu")
-        self.parent.geometry("1600x900")
-
-        self.pack(fill=BOTH, expand=True)
-
-    def initFrame(self):
-        title = Label(self, text="New Play Menu")
-        title.config(font=("Arial", 40))
-        title.pack(pady=60)
+        super().__init__(parent, "New Play Menu")
 
         self.titre = ttk.StringVar(value="")
         self.budget = ttk.IntVar(value="")
@@ -208,6 +200,7 @@ class NewTheaterPlayMenu(Frame):
         self.langue = ttk.StringVar(value="")
         self.genre = ttk.StringVar(value="")
         self.theatre = ttk.StringVar(value="")
+
         # form entries
         self.create_form_entry("Titre", self.titre)
         self.create_form_entry("Budget", self.budget)
@@ -217,39 +210,15 @@ class NewTheaterPlayMenu(Frame):
         self.create_form_entry("Langue", self.langue)
         self.create_form_entry("Genre", self.genre)
         self.create_form_entry("Theatre", self.theatre)
+
         back_button = new_primary_button(
             self, "Back", lambda: self.parent.switch_frame(NewElemMenu)
         )
         self.create_buttonbox()
         back_button.pack(pady=20)
 
-    def create_form_entry(self, label, variable):
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=5)
-
-        lbl = ttk.Label(master=container, text=label.title(), width=10)
-        lbl.pack(side=LEFT, padx=5)
-
-        ent = ttk.Entry(master=container, textvariable=variable)
-        ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
-
-    def create_buttonbox(self):
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=(15, 10))
-
-        sub_btn = ttk.Button(
-            master=container,
-            text="Add",
-            command=self.on_submit,
-            bootstyle=SUCCESS,
-            width=6,
-        )
-        sub_btn.pack(padx=5)
-        sub_btn.focus_set()
-
     def on_submit(self):
         try:
-
             DBManager().run_procedure_with_args(
                 "AddPlays",
                 f"@titre='{self.titre.get()}', @budget={self.budget.get()}, @date_sortie='{self.date.get()}', @duree={self.duree.get()}, @origine='{self.origine.get()}', @langue='{self.langue.get()}', @genre='{self.genre.get()}', @theatre='{self.theatre.get()}'",
@@ -268,25 +237,12 @@ class NewTheaterPlayMenu(Frame):
         self.origine.set("")
         self.langue.set("")
         self.genre.set("")
+        self.theatre.set("")
 
 
-class NewArtistMenu(Frame):
+class NewArtistMenu(BaseMenu):
     def __init__(self, parent):
-        Frame.__init__(self, parent)
-        self.parent = parent
-        self.initUI()
-        self.initFrame()
-
-    def initUI(self):
-        self.parent.title("New Play Menu")
-        self.parent.geometry("1600x900")
-
-        self.pack(fill=BOTH, expand=True)
-
-    def initFrame(self):
-        title = Label(self, text="New Play Menu")
-        title.config(font=("Arial", 40))
-        title.pack(pady=60)
+        super().__init__(parent, "New Artist Menu")
 
         self.prenom = ttk.StringVar(value="")
         self.nom = ttk.StringVar(value="")
@@ -299,6 +255,7 @@ class NewArtistMenu(Frame):
         self.code_postal = ttk.StringVar(value="")
         self.pays = ttk.StringVar(value="")
         self.no_appartement = ttk.IntVar(value=None)
+
         # form entries
         self.create_form_entry("Prénom", self.prenom)
         self.create_form_entry("Nom", self.nom)
@@ -311,35 +268,12 @@ class NewArtistMenu(Frame):
         self.create_form_entry("Code Postal", self.code_postal)
         self.create_form_entry("Pays", self.pays)
         self.create_form_entry("Numéro appartement", self.no_appartement)
+
         back_button = new_primary_button(
             self, "Back", lambda: self.parent.switch_frame(NewElemMenu)
         )
         self.create_buttonbox()
         back_button.pack(pady=20)
-
-    def create_form_entry(self, label, variable):
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=5)
-
-        lbl = ttk.Label(master=container, text=label.title(), width=10)
-        lbl.pack(side=LEFT, padx=5)
-
-        ent = ttk.Entry(master=container, textvariable=variable)
-        ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
-
-    def create_buttonbox(self):
-        container = ttk.Frame(self)
-        container.pack(fill=X, expand=YES, pady=(15, 10))
-
-        sub_btn = ttk.Button(
-            master=container,
-            text="Add",
-            command=self.on_submit,
-            bootstyle=SUCCESS,
-            width=6,
-        )
-        sub_btn.pack(padx=5)
-        sub_btn.focus_set()
 
     def on_submit(self):
         try:

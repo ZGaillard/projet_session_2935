@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE AddMovies @titre VARCHAR(50), @budget INT, @date_sortie DATE, @duree INT, @origine VARCHAR(50), @langue VARCHAR(50), @genre VARCHAR(50), @id_producteur INT
+CREATE OR ALTER PROCEDURE AddMovies @titre VARCHAR(50), @budget INT, @date_sortie DATE, @duree INT, @origine VARCHAR(50), @langue VARCHAR(50), @genre VARCHAR(50), @objectif VARCHAR(50), @theme VARCHAR(50), @id_producteur INT
 AS
 BEGIN
 INSERT INTO Oeuvre
@@ -7,4 +7,6 @@ DECLARE @id INT;
 SET @id = SCOPE_IDENTITY();
 INSERT INTO Film
 VALUES(@id, @id_producteur);
+INSERT INTO Casting
+VALUES(@id, @objectif, @theme);
 END;

@@ -378,8 +378,11 @@ class SearchCastingMenu(Frame):
 
         from data import castings
 
-        castings_table = SearchableTable(self, castings)
-        castings_table.pack(pady=20)
+        self.castings_table = SearchableTable(self, castings)
+        self.castings_table.pack(pady=20)
+
+        update_button = ttk.Button(self, text="Update", command=self.update_table)
+        update_button.pack(pady=20)
 
         separator = Frame(self, height=3, bd=0, relief=SUNKEN)
         separator.pack(fill=X, pady=10)
@@ -388,6 +391,15 @@ class SearchCastingMenu(Frame):
             self, "Back", lambda: self.parent.switch_frame(SearchMenu)
         )
         back_button.pack(pady=20)
+
+    def update_table(self):
+        import data
+
+        importlib.reload(data)
+
+        from data import castings
+
+        self.castings_table.update_data(castings.get_tuples())
 
     def destroy(self):
         Frame.destroy(self)
