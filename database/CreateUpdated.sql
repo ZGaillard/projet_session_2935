@@ -41,6 +41,7 @@ CREATE TABLE Oeuvre (
     CONSTRAINT chk_budget_positive CHECK (budget >= 0),
     CONSTRAINT chk_duree_positive CHECK (duree >= 0),
     CONSTRAINT chk_date_sortie CHECK (date_sortie <= GETDATE()),
+    CONSTRAINT chk_date_fin_not_null CHECK (date_sortie IS NOT NULL),
 );
 CREATE TABLE Adresse(
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -53,7 +54,7 @@ CREATE TABLE Adresse(
     CONSTRAINT chk_no_civique CHECK (no_civique >= 0),
     CONSTRAINT uc_no_civique UNIQUE (no_civique),
     CONSTRAINT chk_no_appartement CHECK (no_appartement >= 0),
-    CONSTRAINT chk_code_postal_format CHECK (code_postal LIKE '[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]')
+    CONSTRAINT chk_code_postal_not_null CHECK (code_postal IS NOT NULL),    
 );
 CREATE TABLE Habitude(
     id INT IDENTITY(1,1) PRIMARY KEY,
