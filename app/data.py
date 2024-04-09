@@ -38,7 +38,6 @@ movies = Data(
     ],
 )
 
-
 theater_plays = Data(
     DBManager().run_procedure("getPlays"),
     [
@@ -52,7 +51,6 @@ theater_plays = Data(
         "Nom du théâtre",
     ],
 )
-
 
 artists = Data(
     DBManager().run_procedure("getArtists"),

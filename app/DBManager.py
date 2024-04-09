@@ -1,10 +1,10 @@
 import pymssql
 
 conn_params = {
-    "server": "localhost",
-    "user": "SA",
-    "password": "Password123",
-    "database": "CASTINGAPP",
+    "server"    : "localhost",
+    "user"      : "SA",
+    "password"  : "Password123",
+    "database"  : "CASTINGAPP",
     "autocommit": True,
 }
 
