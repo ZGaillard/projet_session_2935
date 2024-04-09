@@ -1,6 +1,6 @@
 import tkinter as tk
+
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
 
 import mainMenu
 from DBManager import DBManager
@@ -40,7 +40,7 @@ class MainApplication(tk.Tk):
         tk.Tk.__init__(self)
 
         style = ttk.Style()
-        style.configure("TCalendar", padding=20, font=("Helvetica", 12),)
+        style.configure("TCalendar", padding=20, font=("Helvetica", 12), )
 
         self.title("Casting Manager")
         self.geometry("1600x900")

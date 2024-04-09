@@ -1,4 +1,3 @@
-import tkinter as tk
 import ttkbootstrap as ttk
 
 
@@ -9,7 +8,6 @@ class TopMenu(ttk.Menu):
         self.initMenu(parent)
 
     def initMenu(self, parent):
-
         # sub menu new
         sub_menu_new = ttk.Menu(self)
         from newElemMenu import NewMovieMenu, NewTheaterPlayMenu, \

@@ -1,7 +1,4 @@
-import tkinter as tk
 import ttkbootstrap as ttk
-
-from ttkbootstrap.constants import *
 
 
 def new_primary_button(container, text, command, width=18):

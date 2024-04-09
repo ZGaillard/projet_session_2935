@@ -74,7 +74,36 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%% Contenu %%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Modélisation}
+Nous avons été assigné le sujet 11. La tâche consistait à modéliser
+et implémenter une base de données qui puisse gérer l’implication des
+artistes dans divers films.\n
+Le cahier des charges était le suivant:\n
+\textbf{Artiste}
+\begin{itemize}
+\item Nom, prénom, âge de l’artiste.
+\item Adresse (et appartement au besoin).
+\item Renseignements personnels (habitudes, sports, relations, etc.). 
+\item On doit également pouvoir inscrire si l’artiste a déjà joué dans des films ou théâtres (et avec quelles compagnies). 
+\item Exigences de rémunération.
+\end{itemize}
+D’un autre côté, on veut aussi garder des renseignements sur le casting, l’objectif du casting et le thème. On a aussi les différentes scènes du scénario, avec les exigences en termes de réalisation de scène (action, bataille, passion, discours, etc.).\n
+On aura aussi besoins d’enregistrer les noms des sponsors attachés aux
+films avec les montants des budgets, les détails de financement,
+etc.\n
 
+
+\subsection{Analyse des besoins}
+\begin{itemize}
+\item Les artistes peuvent avoir des habitudes et des sports.
+\item Les artistes peuvent avoir des relations avec d'autres artistes.
+\item Les pieces de théâtre et les films ont des scènes.
+\item Les films et les pièces de théâtre ont des sponsors.
+\item les pièces de théâtre et les films ont des castings.
+\item Les castings ont des artistes qui y participent.
+\item Les films ont des studios de production (compagnies).
+\end{itemize}
+
+  
 \subsection{Modèle Entité-Association}
 \begin{center}
 \includegraphics[scale=0.9]{../modeleEA.pdf}
@@ -254,6 +283,10 @@ durée, origine, langue, genre)
 
 
 \subsection{Normalisation}
+Ici il est important de noter que nous avons modélisé les relations
+en prenant en compte que nous avions à normaliser la base de données
+par la suite. Nous avons donc pris soin de décomposer les relations
+au maximum.
 \subsubsection*{Transformation en 1NF}
 Ici rien à faire, car les tables sont déjà en 1NF: chaque attribut est
 atomique.
@@ -267,6 +300,9 @@ Ici rien à faire, car les tables sont déjà en 3NF:
 tout attribut n'appartenant pas à la clé ne dépend pas d'un attribut non clé
 \vspace{5mm}
 \section{SQL}
+
+Tout les fichiers sql sont dans le dossier
+\href{https://github.com/ZGaillard/projet_session_2935/tree/main/database}{\color{blue}{\underline{database}}}.
 \subsection{LDD}
 Le fichier
 \href{https://github.com/ZGaillard/projet_session_2935/blob/main/database/CreateUpdated.sql}{\color{blue}{\underline{CreateUpdated.sql}}}
@@ -289,19 +325,17 @@ Les procédures stockées sont définies dans les fichiers
 Nous avons d'abord créer dix requêtes pour tester la base de
 donnée. Ces requêtes sont dans le fichier
 \href{https://github.com/ZGaillard/projet_session_2935/blob/main/database/request.sql}{\color{blue}{\underline{request.sql}}}.\n
-
-
 Par la suite, nous avons créé une classe python pour exécuter des
 requêtes SQL. Cette classe est dans le fichier \href{
   https://github.com/ZGaillard/projet_session_2935/blob/main/app/DBManager.py}{\color{blue}{\underline{DBManager.py}}}.
 Cette classe utilise \texttt{pymssql} pour se connecter à la base de
 données. Elle permet d'exécuter des requêtes simples et de récupérer
 les résultats. Elle permet aussi d'exécuter des procédures stockées.\n
-
 Durant le développement de l'application, nous avons trouvé qu'il
 était plus judicieux de créer des procédures stockées pour les
 requêtes qui nécessitaient des requêtes plus complexes. Ces procédures
 stockées sont dans les fichiers :
+
 \begin{itemize}
 \item
   \href{https://github.com/ZGaillard/projet_session_2935/blob/main/database/DefAddAdresse.sql}{\color{blue}{\underline{DefAddAdresse.sql}}}
@@ -347,9 +381,11 @@ stockées sont dans les fichiers :
 
 \end{itemize}
 
-Tout les fichiers sql sont dans le dossier
-\href{https://github.com/ZGaillard/projet_session_2935/tree/main/database}{\color{blue}{\underline{database}}}.
 
-\subsection{}
+
+\section{Application}
+
+
+
 
 \end{document}

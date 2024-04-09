@@ -7,7 +7,6 @@ from ttkbootstrap.dialogs.dialogs import Messagebox
 from DBManager import DBManager
 from data import update_data
 from style import new_primary_button
-from SearchableTable import SearchableTable
 
 
 class NewElemMenu(Frame):

@@ -48,12 +48,13 @@ class MainMenu(ttk.Frame):
         from searchMenu import SearchMenu
         search_button = new_primary_button(button_container, "Search",
                                            lambda: self.parent.switch_frame(
-                                          SearchMenu))
+                                               SearchMenu))
         search_button.pack(side=LEFT, padx=10)
 
         # button to new
         new_button = new_primary_button(button_container, "New",
-                                        lambda: self.parent.switch_frame(NewMenu))
+                                        lambda: self.parent.switch_frame(
+                                            NewMenu))
         new_button.pack(side=LEFT, padx=10)
 
         # separator
