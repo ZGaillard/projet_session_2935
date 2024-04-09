@@ -89,3 +89,17 @@ compagnies = Data(
         "No Appartement",
     ],
 )
+
+oeuvres = Data(
+    DBManager().read("Oeuvre", "id, titre"),
+    ["id", "Titre"]
+)
+
+
+def update_data():
+    movies.tuples = DBManager().run_procedure("getMovies")
+    theater_plays.tuples = DBManager().run_procedure("getPlays")
+    artists.tuples = DBManager().run_procedure("getArtists")
+    castings.tuples = DBManager().run_procedure("getCastings")
+    compagnies.tuples = DBManager().run_procedure("getCompagnies")
+    oeuvres.tuples = DBManager().read("Oeuvre", "id, titre")

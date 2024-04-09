@@ -47,7 +47,10 @@ class DBManager:
 
     def run_procedure_with_args(self, function_name, parameters):
         self.cursor.execute(f"EXEC {function_name} {parameters}")
-        return self.cursor.fetchall()
+        if self.cursor.description is not None:
+            return self.cursor.fetchall()
+        else:
+            return None
 
     def __del__(self):
         self.cursor.close()

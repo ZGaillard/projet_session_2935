@@ -1,2 +1,4 @@
 pymssql==2.2.11
 ttkbootstrap==1.10.1
+
+tkcalendar~=1.6.1

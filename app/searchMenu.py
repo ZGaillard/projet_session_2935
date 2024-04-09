@@ -3,7 +3,8 @@ from tkinter import *
 
 import ttkbootstrap as ttk
 
-from app.DBManager import DBManager
+from DBManager import DBManager
+from SearchableTable import SearchableTable
 from style import new_primary_button
 
 
@@ -66,82 +67,6 @@ class SearchMenu(ttk.Frame):
 
     def destroy(self):
         Frame.destroy(self)
-
-
-class SearchableTable(ttk.Treeview):
-
-    def __init__(self, parent, data):
-
-        # Search bar and combobox for column selection
-        search_bar_container = Frame(parent)
-        search_bar_container.pack(pady=20)
-
-        self.search_text = StringVar()
-        search_bar = ttk.Entry(
-            search_bar_container,
-            textvariable=self.search_text
-        )
-        search_bar.pack(side=LEFT, padx=10)
-
-        self.search_combobox_value = StringVar()
-        self.search_combobox = ttk.Combobox(
-            search_bar_container,
-            textvariable=self.search_combobox_value,
-            values=data.get_column_names(),
-            state='readonly', width=10
-        )
-        self.search_combobox.current(0)
-        self.search_combobox.pack(side=LEFT, padx=10)
-
-        self.search_text.trace(
-            "w",
-            lambda *args: self.search()
-        )
-
-        self.search_combobox.bind(
-            "<<ComboboxSelected>>",
-            lambda *args: self.search()
-        )
-
-        self.parent = parent
-        self.data = data.get_tuples()
-
-        self.column_names = data.get_column_names()
-        ttk.Treeview.__init__(
-            self, parent,
-            columns=self.column_names,
-            show="headings"
-        )
-
-        # determine the width of the columns based on the data
-        for i, column_name in enumerate(self.column_names):
-            mean_width = sum(
-                len(str(row[i + 1])) for row in self.data
-            ) // len(self.data)
-            self.column(column_name, width=mean_width * 24,
-                        minwidth=100, stretch=YES
-                        )
-            self.heading(column_name, text=column_name, anchor=W)
-
-        # insert data (skip the first column which is the id)
-        for row in self.data:
-            visible_row = row[1:]
-            self.insert("", "end", values=visible_row)
-
-    def search(self):
-        self.reset()
-        search_text = self.search_text.get().lower()
-        search_column = self.search_combobox.get()
-        search_index = self.column_names.index(search_column)
-        for row in self.data:
-            visible_row = row[1:]
-            if search_text in str(visible_row[search_index]).lower():
-                self.insert("", "end", values=visible_row)
-
-    def reset(self):
-        x = self.get_children()
-        for item in x:
-            self.delete(item)
 
 
 class SearchMovieMenu(Frame):
@@ -308,7 +233,8 @@ class ArtistHabitSportMenu(Frame):
         self.pack(fill=BOTH, expand=True)
 
         title = ttk.Label(self,
-                          text=f"{artist_name[0][0]} {artist_name[0][1]}'s Habits and Sports", )
+                          text=f"{artist_name[0][0]} {artist_name[0][1]}'s "
+                               f"Habits and Sports", )
         title.config(font=("Arial", 20))
         title.pack(pady=40)
 
@@ -441,7 +367,8 @@ class SearchCastingMenu(Frame):
         selected_casting_id = self.castings_table.selection()
         if not selected_casting_id:
             return None
-        selected_casting = self.castings_table.item(selected_casting_id[0])['values']
+        selected_casting = self.castings_table.item(selected_casting_id[0])[
+            'values']
         selected_casting = tuple(selected_casting)
         casting_id = None
         from data import castings
@@ -451,6 +378,7 @@ class SearchCastingMenu(Frame):
                 break
 
         return casting_id
+
 
 class ArtistCastingMenu(Frame):
 
@@ -483,7 +411,7 @@ class ArtistCastingMenu(Frame):
         artists_label.pack(pady=10)
 
         artists_treeview = ttk.Treeview(details_container,
-                                          columns=("Artist", "Role"))
+                                        columns=("Artist", "Role"))
         artists_treeview.heading("Artist", text="Artist")
         artists_treeview.heading("Role", text="Role")
         artists_treeview.column("#0", width=0, stretch=NO)
@@ -495,8 +423,8 @@ class ArtistCastingMenu(Frame):
         for artist in artists:
             full_name = str(artist[0]) + " " + str(artist[1])
             artists_treeview.insert("", "end",
-                                      values=(full_name, artist[2])
-                                      )
+                                    values=(full_name, artist[2])
+                                    )
 
         back_button = new_primary_button(
             self, "Back",
