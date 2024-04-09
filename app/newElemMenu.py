@@ -73,22 +73,11 @@ class NewElemMenu(Frame):
         back_button.pack(pady=20)
 
 
-def create_text_entry(self, label, variable):
-    container = ttk.Frame(self)
-    container.pack(fill=X, expand=YES, pady=5)
-
-    lbl = ttk.Label(master=container, text=label.title(), width=10)
-    lbl.pack(side=LEFT, padx=5)
-
-    ent = ttk.Entry(master=container, textvariable=variable)
-    ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
-
-
 def create_date_entry(self, label, variable):
     container = ttk.Frame(self)
     container.pack(fill=X, expand=YES, pady=5)
 
-    lbl = ttk.Label(master=container, text=label.title(), width=10)
+    lbl = ttk.Label(master=container, text=label.title(), width=15)
     lbl.pack(side=LEFT, padx=5)
 
     date_ent = ttk.DateEntry(master=container)
@@ -102,7 +91,7 @@ def create_spinbox_entry(self, label, variable):
     container = ttk.Frame(self)
     container.pack(fill=X, expand=YES, pady=5)
 
-    lbl = ttk.Label(master=container, text=label.title(), width=10)
+    lbl = ttk.Label(master=container, text=label.title(), width=15)
     lbl.pack(side=LEFT, padx=5)
 
     spin_ent = ttk.Spinbox(master=container, textvariable=variable, from_=0,
@@ -114,7 +103,7 @@ def create_form_entry(parent, label, variable):
     container = ttk.Frame(parent)
     container.pack(fill=X, expand=YES, pady=5)
 
-    lbl = ttk.Label(master=container, text=label.title(), width=10)
+    lbl = ttk.Label(master=container, text=label.title(), width=15)
     lbl.pack(side=LEFT, padx=5)
 
     ent = ttk.Entry(master=container, textvariable=variable)
