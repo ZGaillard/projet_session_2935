@@ -28,18 +28,19 @@ class MainApplication(tk.Tk):
         self.db_manager.run_file("../database/DefGetArtistHabit.sql")
         self.db_manager.run_file("../database/DefGetArtistSports.sql")
         self.db_manager.run_file("../database/DefGetArtistRelations.sql")
-
-
-        #self.db_manager.run_file("../database/DefAddMovies.sql")
         self.db_manager.run_file("../database/DefGetCompagnies.sql")
-        #self.db_manager.run_file("../database/DefAddPlays.sql")
-        #self.db_manager.run_file("../database/DefAddArtist.sql")
-        #self.db_manager.run_file("../database/DefAddAdresse.sql")
+
+        self.db_manager.run_file("../database/DefAddMovies.sql")
+        self.db_manager.run_file("../database/DefAddPlays.sql")
+        self.db_manager.run_file("../database/DefAddArtist.sql")
+        self.db_manager.run_file("../database/DefAddAdresse.sql")
+        self.db_manager.run_file("../database/DefAddCasting.sql")
 
         # UI
         tk.Tk.__init__(self)
 
         style = ttk.Style()
+        style.configure("TCalendar", padding=20, font=("Helvetica", 12),)
 
         self.title("Casting Manager")
         self.geometry("1600x900")
