@@ -52,7 +52,6 @@ CREATE TABLE Adresse(
     pays VARCHAR(50),
     no_appartement INT,
     CONSTRAINT chk_no_civique CHECK (no_civique >= 0),
-    CONSTRAINT uc_no_civique UNIQUE (no_civique),
     CONSTRAINT chk_no_appartement CHECK (no_appartement >= 0),
     CONSTRAINT chk_code_postal_not_null CHECK (code_postal IS NOT NULL),    
 );
