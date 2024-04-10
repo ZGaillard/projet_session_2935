@@ -24,6 +24,7 @@ class MainApplication(tk.Tk):
         self.db_manager.run_file("../database/DefGetMovies.sql")
         self.db_manager.run_file("../database/DefGetPlays.sql")
         self.db_manager.run_file("../database/DefGetCastings.sql")
+
         self.db_manager.run_file("../database/DefGetCastingArtists.sql")
         self.db_manager.run_file("../database/DefGetArtistHabit.sql")
         self.db_manager.run_file("../database/DefGetArtistSports.sql")
@@ -34,7 +35,8 @@ class MainApplication(tk.Tk):
         self.db_manager.run_file("../database/DefAddPlays.sql")
         self.db_manager.run_file("../database/DefAddArtist.sql")
         self.db_manager.run_file("../database/DefAddAdresse.sql")
-        self.db_manager.run_file("../database/DefAddCasting.sql")
+        #self.db_manager.run_file("../database/DefAddCasting.sql")
+        self.db_manager.run_file("../database/AddArtistToCasting.sql")
 
         # UI
         tk.Tk.__init__(self)

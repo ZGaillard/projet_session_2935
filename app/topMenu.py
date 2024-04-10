@@ -11,7 +11,7 @@ class TopMenu(ttk.Menu):
         # sub menu new
         sub_menu_new = ttk.Menu(self)
         from newElemMenu import NewMovieMenu, NewTheaterPlayMenu, \
-            NewArtistMenu, NewCastingMenu
+            NewArtistMenu, AddArtistCasting
         self.new_menu_command(sub_menu_new, "New movie",
                               lambda: parent.switch_frame(NewMovieMenu))
         self.new_menu_command(sub_menu_new, "New theater play",
@@ -19,7 +19,7 @@ class TopMenu(ttk.Menu):
         self.new_menu_command(sub_menu_new, "New artist",
                               lambda: parent.switch_frame(NewArtistMenu))
         self.new_menu_command(sub_menu_new, "New casting",
-                              lambda: parent.switch_frame(NewCastingMenu))
+                              lambda: parent.switch_frame(AddArtistCasting))
 
         # sub menu search
         sub_menu_search = ttk.Menu(self)

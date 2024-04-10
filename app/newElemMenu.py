@@ -55,8 +55,8 @@ class NewElemMenu(Frame):
         n_artist_button.pack(side=LEFT, padx=10)
         n_casting_button = new_primary_button(
             button_container_2,
-            "New casting",
-            lambda: self.parent.switch_frame(NewCastingMenu),
+            "Add artist to casting",
+            lambda: self.parent.switch_frame(AddArtistCasting),
         )
         n_casting_button.pack(side=LEFT, padx=10)
 
@@ -196,8 +196,16 @@ class NewMovieMenu(Frame):
         create_form_entry(form_container, "Origine", self.origine)
         create_form_entry(form_container, "Langue", self.langue)
         create_form_entry(form_container, "Genre", self.genre)
-        create_text_area(form_container, "Objectif du casting", self.objectif)
-        create_text_area(form_container, "Thème du casting", self.theme)
+        self.objectif_textarea = create_text_area(
+            form_container,
+            "Objectif du casting",
+            self.objectif
+        )
+        self.theme_textarea = create_text_area(
+            form_container,
+            "Thème du casting",
+            self.theme
+        )
         self.producteur_treeview = ttk.Treeview(
             container, columns="Producteur", show="headings"
         )
@@ -272,8 +280,6 @@ class NewMovieMenu(Frame):
             f" '{self.objectif.get()}',"
             f" '{self.theme.get()}';"
         )
-        print(sql_args)
-
         DBManager().run_procedure_with_args("AddMovies", sql_args)
         update_data()
 
@@ -288,6 +294,10 @@ class NewMovieMenu(Frame):
         self.origine.set("")
         self.langue.set("")
         self.genre.set("")
+        self.objectif.set("")
+        self.objectif_textarea.delete('1.0', 'end')
+        self.theme.set("")
+        self.theme_textarea.delete('1.0', 'end')
 
 
 class NewTheaterPlayMenu(Frame):
@@ -372,7 +382,6 @@ class NewTheaterPlayMenu(Frame):
             f" '{self.objectif.get()}',"
             f" '{self.theme.get()}';"
         )
-        print(sql_args)
 
         DBManager().run_procedure_with_args("AddPlays", sql_args)
         update_data()
@@ -390,6 +399,7 @@ class NewTheaterPlayMenu(Frame):
         self.genre.set("")
         self.theatre.set("")
         self.objectif.set("")
+        self.theme.set("")
 
 
 class NewArtistMenu(Frame):
@@ -488,8 +498,6 @@ class NewArtistMenu(Frame):
         id_adresse = DBManager().run_procedure_with_args(
             "AddAdresse", sql_args_addr)[0][0]
 
-        print(id_adresse)
-
         sql_args = (
             f" '{self.prenom.get()}',"
             f" '{self.nom.get()}',"
@@ -498,8 +506,6 @@ class NewArtistMenu(Frame):
             f" '{self.domaine.get()}',"
             f" {id_adresse};"
         )
-
-        print(sql_args)
         DBManager().run_procedure_with_args("AddArtist", sql_args)
         update_data()
 
@@ -520,40 +526,56 @@ class NewArtistMenu(Frame):
         self.ville.set("")
 
 
-class NewCastingMenu(Frame):
+class AddArtistCasting(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
-        self.oeuvre_treeview = None
         self.parent = parent
-        self.parent.title("New Casting Menu")
+        self.parent.title("Add an artist to a casting")
         self.pack(fill=BOTH, expand=True)
-        self.objectif = ttk.StringVar(value="")
-        self.theme = ttk.StringVar(value="")
-        self.id_oeuvre = ttk.IntVar(value=0)
+
+        self.oeuvre_treeview = None
+        self.artist_treeview = None
+
+        self.id_oeuvre = ttk.IntVar(value=0)  # these values come
+        self.id_artiste = ttk.IntVar(value=0)  # from the treeview
+
+        self.fonction = ttk.StringVar(value="")
+        self.salaire = ttk.IntVar(value=0)
+        self.date_debut = ttk.StringVar(value="")
+        self.date_fin = ttk.StringVar(value="")
+
         self.initFrame()
 
     def initFrame(self):
-        title = Label(self, text="New Casting Menu")
+        title = Label(self, text="Add an artist to a casting")
         title.config(font=("Arial", 40))
         title.pack(pady=60)
 
         container = ttk.Frame(self)
         container.pack(fill=BOTH, expand=YES, pady=20)
 
-        form_container = ttk.Frame(container)
-        form_container.pack(side=LEFT, fill=BOTH, expand=YES, pady=20)
-        # form entries
-        create_text_area(form_container, "Objectif", self.objectif)
-        create_text_area(form_container, "Thème", self.theme)
-
         self.oeuvre_treeview = ttk.Treeview(
-            container, columns="Producteur", show="headings"
+            container, columns="Titre de l'oeuvre", show="headings"
         )
         self.oeuvre_treeview.heading("#1", text="Oeuvre")
         self.oeuvre_treeview.column("#1", width=300, stretch=True)
         self.oeuvre_treeview.pack(side=LEFT, fill=BOTH, expand=YES, padx=20)
-
         self.populate_oeuvre_treeview()
+
+        self.artist_treeview = ttk.Treeview(
+            container, columns=("Prénom", "Nom"), show="headings"
+        )
+        self.artist_treeview.heading("#1", text="Prénom")
+        self.artist_treeview.heading("#2", text="Nom")
+        self.artist_treeview.column("#1", width=300, stretch=True)
+        self.artist_treeview.column("#2", width=300, stretch=True)
+        self.artist_treeview.pack(side=LEFT, fill=BOTH, expand=YES, padx=20)
+        self.populate_artist_treeview()
+
+        create_form_entry(self, "Fonction", self.fonction)
+        create_spinbox_entry(self, "Salaire", self.salaire)
+        create_date_entry(self, "Date de début", self.date_debut)
+        create_date_entry(self, "Date de fin", self.date_fin)
 
         create_submit_button(self)
         create_back_button(self)
@@ -577,31 +599,79 @@ class NewCastingMenu(Frame):
 
         self.oeuvre_treeview.bind("<<TreeviewSelect>>", on_treeview_select)
 
-    def on_submit(self):
-        if self.objectif.get() == "":
-            Messagebox.show_error("Enter an objectif", "Error")
-            return
-        if self.theme.get() == "":
-            Messagebox.show_error("Enter a theme", "Error")
-            return
+    def populate_artist_treeview(self):
+        from data import artists
 
+        # Clear the Treeview before populating it with new results
+        for item in self.artist_treeview.get_children():
+            self.artist_treeview.delete(item)
+
+        # Populate the Treeview with the results
+        for result in artists.tuples:
+            self.artist_treeview.insert(
+                "", ttk.END, values=result[1:], iid=result[0]
+            )
+
+        def on_treeview_select(event):
+            selected_item = self.artist_treeview.selection()[0]
+            self.id_artiste.set(int(selected_item))
+
+        self.artist_treeview.bind("<<TreeviewSelect>>", on_treeview_select)
+
+    def on_submit(self):
         if self.id_oeuvre.get() == 0:
             Messagebox.show_error("Select an oeuvre", "Error")
+            return
+        if self.id_artiste.get() == 0:
+            Messagebox.show_error("Select an artist", "Error")
+            return
+        if self.fonction.get() == "":
+            Messagebox.show_error("Enter a fonction", "Error")
+            return
+        if self.salaire.get() == 0:
+            Messagebox.show_error("Enter a salaire", "Error")
+            return
+        if self.date_debut.get() == "":
+            Messagebox.show_error("Enter a date de début", "Error")
+            return
+        if self.date_fin.get() == "":
+            Messagebox.show_error("Enter a date de fin", "Error")
+            return
+
+        current_castings = DBManager().read_where(
+            "Casting_Artiste", "*",
+            f"ID_Artiste = {self.id_artiste.get()} "
+            f"AND ID_Oeuvre = {self.id_oeuvre.get()}"
+        )
+        if current_castings:
+            Messagebox.show_error(
+                "This artist is already in the casting", "Error"
+            )
             return
 
         sql_args = (
             f" {self.id_oeuvre.get()},"
-            f" '{self.objectif.get()}',"
-            f" '{self.theme.get()}';"
+            f" {self.id_artiste.get()},"
+            f" '{self.fonction.get()}',"
+            f" {self.salaire.get()},"
+            f" '{self.date_debut.get()}',"
+            f" '{self.date_fin.get()}';"
         )
 
-        DBManager().run_procedure_with_args("AddCasting", sql_args)
+        DBManager().run_procedure_with_args(
+            "AddArtistToCasting", sql_args
+        )
         update_data()
 
-        Messagebox.ok("Casting added successfully", "Success")
+        Messagebox.ok(
+            "Artist successfully added to casting", "Success"
+        )
         self.clear_form()
 
     def clear_form(self):
-        self.objectif.set("")
-        self.theme.set("")
         self.id_oeuvre.set(0)
+        self.id_artiste.set(0)
+        self.fonction.set("")
+        self.salaire.set(0)
+        self.date_debut.set("")
+        self.date_fin.set("")
