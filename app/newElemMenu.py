@@ -74,7 +74,7 @@ class NewElemMenu(Frame):
 
 def create_date_entry(self, label, variable):
     container = ttk.Frame(self)
-    container.pack(fill=X, expand=YES, pady=5)
+    container.pack(fill=X, expand=YES, pady=5, padx=100)
 
     lbl = ttk.Label(master=container, text=label.title(), width=15)
     lbl.pack(side=LEFT, padx=5)
@@ -88,7 +88,7 @@ def create_date_entry(self, label, variable):
 
 def create_spinbox_entry(self, label, variable):
     container = ttk.Frame(self)
-    container.pack(fill=X, expand=YES, pady=5)
+    container.pack(fill=X, expand=YES, pady=5, padx=100)
 
     lbl = ttk.Label(master=container, text=label.title(), width=15)
     lbl.pack(side=LEFT, padx=5)
@@ -100,7 +100,7 @@ def create_spinbox_entry(self, label, variable):
 
 def create_form_entry(parent, label, variable):
     container = ttk.Frame(parent)
-    container.pack(fill=X, expand=YES, pady=5)
+    container.pack(fill=X, expand=YES, pady=5, padx=100)
 
     lbl = ttk.Label(master=container, text=label.title(), width=15)
     lbl.pack(side=LEFT, padx=5)
@@ -109,18 +109,41 @@ def create_form_entry(parent, label, variable):
     ent.pack(side=LEFT, padx=5, fill=X, expand=YES)
 
 
+def create_text_area(parent, label, variable):
+    container = ttk.Frame(parent)
+    container.pack(fill='x', expand=True, pady=5, padx=100)
+
+    lbl = ttk.Label(master=container, text=label.title(), width=15)
+    lbl.pack(side='left', padx=5)
+
+    text_area = ttk.Text(
+        master=container,
+        height=3,
+        wrap='word',
+        padx=2, pady=2
+    )
+    text_area.insert('1.0', variable.get())
+    text_area.pack(side='left', padx=5, fill='both', expand=True)
+
+    # Link the text variable bidirectionally with the text area
+    text_area.bind("<KeyRelease>", lambda event, var=variable: var.set(
+        text_area.get('1.0', 'end-1c')))
+
+    return text_area
+
+
 def create_submit_button(parent):
     container = ttk.Frame(parent)
-    container.pack(fill=X, expand=YES, pady=(15, 10))
+    container.pack(fill=X, expand=YES, pady=20, padx=100)
 
     sub_btn = ttk.Button(
         master=container,
         text="Add",
         command=parent.on_submit,
         style=SUCCESS,
-        width=6,
+        width=18,
     )
-    sub_btn.pack(padx=5)
+    sub_btn.pack()
     sub_btn.focus_set()
 
 
@@ -128,7 +151,7 @@ def create_back_button(parent):
     back_button = new_primary_button(
         parent, "Back", lambda: parent.parent.switch_frame(NewElemMenu)
     )
-    back_button.pack(pady=20)
+    back_button.pack(pady=10)
 
 
 class NewMovieMenu(Frame):
@@ -145,6 +168,8 @@ class NewMovieMenu(Frame):
         self.date = ttk.StringVar(value="")
         self.budget = ttk.IntVar(value=0)
         self.titre = ttk.StringVar(value="")
+        self.objectif = ttk.StringVar(value="")
+        self.theme = ttk.StringVar(value="")
 
         self.parent = parent
 
@@ -171,11 +196,13 @@ class NewMovieMenu(Frame):
         create_form_entry(form_container, "Origine", self.origine)
         create_form_entry(form_container, "Langue", self.langue)
         create_form_entry(form_container, "Genre", self.genre)
+        create_text_area(form_container, "Objectif du casting", self.objectif)
+        create_text_area(form_container, "Thème du casting", self.theme)
         self.producteur_treeview = ttk.Treeview(
             container, columns="Producteur", show="headings"
         )
         self.producteur_treeview.heading("#1", text="Producteur")
-        self.producteur_treeview.column("#1", width=200, stretch=False)
+        self.producteur_treeview.column("#1", width=400, stretch=False)
         self.producteur_treeview.pack(side=LEFT, fill=BOTH, expand=YES, padx=20)
         self.populate_producteur_treeview()
 
@@ -226,6 +253,12 @@ class NewMovieMenu(Frame):
         if self.budget.get() == 0:
             Messagebox.show_error("Enter a budget", "Error")
             return
+        if self.objectif.get() == "":
+            Messagebox.show_error("Enter an objectif", "Error")
+            return
+        if self.theme.get() == "":
+            Messagebox.show_error("Enter a theme", "Error")
+            return
 
         sql_args = (
             f" '{self.titre.get()}',"
@@ -235,7 +268,9 @@ class NewMovieMenu(Frame):
             f" '{self.origine.get()}',"
             f" '{self.langue.get()}',"
             f" '{self.genre.get()}',"
-            f" '{self.selected_producteur_id.get()}';"
+            f" '{self.selected_producteur_id.get()}',"
+            f" '{self.objectif.get()}',"
+            f" '{self.theme.get()}';"
         )
         print(sql_args)
 
@@ -258,6 +293,8 @@ class NewMovieMenu(Frame):
 class NewTheaterPlayMenu(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
+        self.theme = ttk.StringVar(value="")
+        self.objectif = ttk.StringVar(value="")
         self.theatre = ttk.StringVar(value="")
         self.genre = ttk.StringVar(value="")
         self.langue = ttk.StringVar(value="")
@@ -285,6 +322,8 @@ class NewTheaterPlayMenu(Frame):
         create_form_entry(self, "Langue", self.langue)
         create_form_entry(self, "Genre", self.genre)
         create_form_entry(self, "Théâtre", self.theatre)
+        create_text_area(self, "Objectif du casting", self.objectif)
+        create_text_area(self, "Thème du casting", self.theme)
 
         create_submit_button(self)
         create_back_button(self)
@@ -314,6 +353,12 @@ class NewTheaterPlayMenu(Frame):
         if self.theatre.get() == "":
             Messagebox.show_error("Enter a theatre", "Error")
             return
+        if self.objectif.get() == "":
+            Messagebox.show_error("Enter an objectif", "Error")
+            return
+        if self.theme.get() == "":
+            Messagebox.show_error("Enter a theme", "Error")
+            return
 
         sql_args = (
             f" '{self.titre.get()}',"
@@ -323,7 +368,9 @@ class NewTheaterPlayMenu(Frame):
             f" '{self.origine.get()}',"
             f" '{self.langue.get()}',"
             f" '{self.genre.get()}',"
-            f" '{self.theatre.get()}';"
+            f" '{self.theatre.get()}',"
+            f" '{self.objectif.get()}',"
+            f" '{self.theme.get()}';"
         )
         print(sql_args)
 
@@ -341,6 +388,8 @@ class NewTheaterPlayMenu(Frame):
         self.origine.set("")
         self.langue.set("")
         self.genre.set("")
+        self.theatre.set("")
+        self.objectif.set("")
 
 
 class NewArtistMenu(Frame):
@@ -494,8 +543,8 @@ class NewCastingMenu(Frame):
         form_container = ttk.Frame(container)
         form_container.pack(side=LEFT, fill=BOTH, expand=YES, pady=20)
         # form entries
-        create_form_entry(form_container, "Objectif", self.objectif)
-        create_form_entry(form_container, "Theme", self.theme)
+        create_text_area(form_container, "Objectif", self.objectif)
+        create_text_area(form_container, "Thème", self.theme)
 
         self.oeuvre_treeview = ttk.Treeview(
             container, columns="Producteur", show="headings"

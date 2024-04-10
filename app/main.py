@@ -43,7 +43,7 @@ class MainApplication(tk.Tk):
         style.configure("TCalendar", padding=20, font=("Helvetica", 12), )
 
         self.title("Casting Manager")
-        self.geometry("1600x900")
+        self.geometry("2400x1200")
         self.frame = None
         self.switch_frame(mainMenu.MainMenu)
 

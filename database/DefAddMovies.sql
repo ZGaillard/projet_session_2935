@@ -6,7 +6,9 @@ CREATE OR ALTER PROCEDURE AddMovies
     @origine VARCHAR(50),
     @langue VARCHAR(50),
     @genre VARCHAR(50),
-    @id_producteur INT
+    @id_producteur INT,
+    @objectif_casting VARCHAR(50),
+    @theme_casting VARCHAR(50)
 AS
 BEGIN
 
@@ -19,5 +21,7 @@ SELECT @id = id FROM Oeuvre WHERE titre = @titre;
 INSERT INTO Film
 VALUES(@id, @id_producteur);
 
-SELECT @id; -- return the id of the new movie for casting creation
+INSERT INTO Casting
+VALUES(@id, @objectif_casting, @theme_casting);
+
 END;

@@ -15,7 +15,8 @@ class SearchableTable(ttk.Treeview):
         self.search_text = StringVar()
         search_bar = ttk.Entry(
             search_bar_container,
-            textvariable=self.search_text
+            textvariable=self.search_text,
+            width=40
         )
         search_bar.pack(side=LEFT, padx=10)
 
@@ -32,7 +33,7 @@ class SearchableTable(ttk.Treeview):
                 search_bar_container,
                 textvariable=self.search_combobox_value,
                 values=data.get_column_names(),
-                state='readonly', width=10
+                state='readonly', width=15
             )
             self.search_combobox.current(0)
             self.search_combobox.pack(side=LEFT, padx=10)
@@ -57,7 +58,7 @@ class SearchableTable(ttk.Treeview):
             mean_width = sum(
                 len(str(row[i + 1])) for row in self.data
             ) // len(self.data)
-            self.column(column_name, width=mean_width * 24,
+            self.column(column_name, width=mean_width * 32,
                         minwidth=100, stretch=YES
                         )
             self.heading(column_name, text=column_name, anchor=W)
