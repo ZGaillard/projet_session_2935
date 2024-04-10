@@ -41,7 +41,7 @@ CREATE TABLE Oeuvre (
     CONSTRAINT chk_budget_positive CHECK (budget >= 0),
     CONSTRAINT chk_duree_positive CHECK (duree >= 0),
     CONSTRAINT chk_date_sortie CHECK (date_sortie <= GETDATE()),
-    CONSTRAINT chk_date_fin_not_null CHECK (date_sortie IS NOT NULL),
+    CONSTRAINT chk_date_fin_not_null_oeuvre CHECK (date_sortie IS NOT NULL),
 );
 CREATE TABLE Adresse(
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -59,12 +59,12 @@ CREATE TABLE Adresse(
 CREATE TABLE Habitude(
     id INT IDENTITY(1,1) PRIMARY KEY,
     nom VARCHAR(50),
-    CONSTRAINT chk_nom CHECK (nom is not null),
+    CONSTRAINT chk_nom_habit CHECK (nom is not null),
 );
 CREATE TABLE Sport(
     id INT IDENTITY(1,1) PRIMARY KEY,
     nom VARCHAR(50),
-    CONSTRAINT chk_nom CHECK (nom is not null),
+    CONSTRAINT chk_nom_sport CHECK (nom is not null),
 );
 CREATE TABLE Compagnie(
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -108,7 +108,7 @@ CREATE TABLE Artiste(
     domaine VARCHAR(50),
     id_adresse INT,
     CONSTRAINT fk_artiste_adresse FOREIGN KEY (id_adresse) REFERENCES Adresse(id),
-    CONSTRAINT chk_salaire CHECK (salaire_min >= 0),
+    CONSTRAINT chk_salaire_artist CHECK (salaire_min >= 0),
     CONSTRAINT chk_nom_length CHECK (LEN(nom) <= 50),
     CONSTRAINT chk_prenom_length CHECK (LEN(prenom) <= 50)
 );
@@ -150,11 +150,10 @@ CREATE TABLE Casting_Artiste(
     CONSTRAINT fk_casting_artiste_oeuvre FOREIGN KEY (id_oeuvre) REFERENCES Oeuvre(id),
     CONSTRAINT pk_casting_artiste PRIMARY KEY (id_artiste, id_oeuvre),
     CONSTRAINT chk_date CHECK (date_debut <= date_fin),
-    CONSTRAINT chk_salaire CHECK (salaire >= 0), 
+    CONSTRAINT chk_salaire_casting_artist CHECK (salaire >= 0),
     CONSTRAINT chk_fonction CHECK (fonction is not null),
-    CONSTRAINT chk_fonction_length CHECK (DATALENGT(fonction) <= 50),
     CONSTRAINT chk_date_debut_not_null CHECK (date_debut IS NOT NULL),
-    CONSTRAINT chk_date_fin_not_null CHECK (date_fin IS NOT NULL),
+    CONSTRAINT chk_date_fin_not_null_casting_artist CHECK (date_fin IS NOT NULL),
 );
 CREATE TABLE Relation(
     id_artiste1 INT,
