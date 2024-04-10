@@ -406,7 +406,7 @@ class NewArtistMenu(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.parent = parent
-        self.parent.title("New Play Menu")
+        self.parent.title("New Artist Menu")
         self.pack(fill=BOTH, expand=True)
 
         self.prenom = ttk.StringVar(value="")
@@ -424,7 +424,7 @@ class NewArtistMenu(Frame):
         self.initFrame()
 
     def initFrame(self):
-        title = Label(self, text="New Play Menu")
+        title = Label(self, text="New Artist Menu")
         title.config(font=("Arial", 40))
         title.pack(pady=60)
 
