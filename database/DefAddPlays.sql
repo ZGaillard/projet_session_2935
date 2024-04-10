@@ -6,7 +6,9 @@ CREATE OR ALTER PROCEDURE AddPlays
     @origine VARCHAR(50),
     @langue VARCHAR(50),
     @genre VARCHAR(50),
-    @theatre VARCHAR(50)
+    @theatre VARCHAR(50),
+    @objectif_casting VARCHAR(50),
+    @theme_casting VARCHAR(50)
 AS
 BEGIN
 INSERT INTO Oeuvre
@@ -17,4 +19,8 @@ SELECT @id_oeuvre = id FROM Oeuvre WHERE titre = @titre;
 
 INSERT INTO Piece
 VALUES(@id_oeuvre, @theatre);
+
+INSERT INTO Casting
+VALUES(@id_oeuvre, @objectif_casting, @theme_casting);
+
 END;
