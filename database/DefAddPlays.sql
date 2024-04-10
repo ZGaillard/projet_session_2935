@@ -17,4 +17,6 @@ SELECT @id_oeuvre = id FROM Oeuvre WHERE titre = @titre;
 
 INSERT INTO Piece
 VALUES(@id_oeuvre, @theatre);
+
+SELECT @id_oeuvre; -- retourne l'id de l'oeuvre ajoutée pour pouvoir l'utiliser dans le casting
 END;
